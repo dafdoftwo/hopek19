@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hope-K19 | المتجر الرسمي</title>
+    
+    <!-- Google Fonts - Tajawal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand': {
+                            'navy': '#1a365d',
+                            'navy-dark': '#0f2744',
+                            'green': '#1e4d3a',
+                            'green-dark': '#153228'
+                        },
+                        'charcoal': '#333333',
+                        'soft-gray': '#F8F9FA',
+                        'border-gray': '#E5E7EB'
+                    },
+                    fontFamily: {
+                        'tajawal': ['Tajawal', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        * {
+            font-family: 'Tajawal', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Prevent horizontal scroll on mobile */
+        html, body {
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F8F9FA;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 4px;
+        }
+        
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Image slider transitions */
+        .slider-image {
+            transition: opacity 0.5s ease-in-out;
+        }
+        
+        /* Pulse animation for CTA */
+        @keyframes subtle-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        .cta-pulse:hover {
+            animation: subtle-pulse 1s ease-in-out infinite;
+        }
+        
+        /* Radio button custom styling */
+        .bundle-option {
+            transition: all 0.3s ease;
+        }
+        .bundle-option.selected {
+            border-color: #1a365d;
+            background-color: #f0f4f8;
+        }
+        
+        /* Mobile Optimizations */
+        @media (max-width: 640px) {
+            /* Better touch targets */
+            button, a, label, input[type="radio"] {
+                min-height: 44px;
+            }
+            
+            /* Improve readability */
+            p, li, span {
+                line-height: 1.7;
+            }
+            
+            /* Safe area for notched phones */
+            .fixed.bottom-0 {
+                padding-bottom: env(safe-area-inset-bottom, 12px);
+            }
+            
+            /* Reduce spacing on mobile for compact view */
+            section {
+                padding-top: 2rem;
+                padding-bottom: 2rem;
+            }
+            
+            /* Better image sizing */
+            img {
+                max-width: 100%;
+                height: auto;
+            }
+            
+            /* Optimize video for mobile */
+            video {
+                max-width: 100%;
+            }
+            
+            /* Footer spacing for sticky CTA */
+            footer {
+                padding-bottom: 80px;
+            }
+        }
+        
+        /* Active states for touch */
+        @media (hover: none) {
+            button:active, a:active, label:active {
+                opacity: 0.8;
+                transform: scale(0.98);
+            }
+        }
+        
+        /* Social Proof Notification */
+        .social-proof-notification {
+            transform: translateX(-100%);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .social-proof-notification.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-white text-charcoal font-tajawal" x-data="shopApp()">
+
+    <!-- Sticky Header -->
+    <header class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-sm z-50 border-b border-border-gray">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="relative w-9 h-9 md:w-10 md:h-10">
+                    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-brand-navy transition-transform group-hover:scale-110 duration-300">
+                        <path d="M20 2.5L5 10V30L20 37.5L35 30V10L20 2.5Z" stroke="currentColor" stroke-width="3" fill="currentColor" fill-opacity="0.05"/>
+                        <path d="M21 9L13 21H19L17 31L27 17H21L23 9H21Z" fill="#F59E0B"/>
+                    </svg>
+                </div>
+                <div class="flex flex-col items-start">
+                    <span class="font-black text-xl md:text-2xl leading-none tracking-tight text-brand-navy">HOPE<span class="text-amber-500">K19</span></span>
+                    <span class="text-[9px] md:text-[10px] font-bold tracking-[0.2em] text-brand-navy/60 uppercase">MILITARY GRADE</span>
+                </div>
+            </a>
+            <button @click="scrollToOrder()" class="bg-brand-navy hover:bg-brand-navy-dark text-white px-5 py-2 rounded-lg text-sm font-medium transition-colors duration-300">
+                اطلب الآن
+            </button>
+        </div>
+    </header>
+
+    <!-- Spacer for fixed header -->
+    <div class="h-14 md:h-16"></div>
+
+    <!-- Hero Section -->
+    <section class="bg-white">
+        <div class="max-w-7xl mx-auto px-4 py-6 md:py-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+                
+                <!-- Image Carousel - Mobile First (Top) -->
+                <div class="relative" x-data="{ currentSlide: 0, totalSlides: 4 }">
+                    <!-- Main Image -->
+                    <div class="relative aspect-square bg-soft-gray rounded-2xl overflow-hidden shadow-lg">
+                        <template x-for="(image, index) in images" :key="index">
+                            <img 
+                                :src="image" 
+                                :alt="'Hope-K19 Product Image ' + (index + 1)"
+                                class="absolute inset-0 w-full h-full object-contain slider-image mix-blend-multiply"
+                                :class="{ 'opacity-100': currentSlide === index, 'opacity-0': currentSlide !== index }"
+                            >
+                        </template>
+                        
+                        <!-- Navigation Arrows -->
+                        <button 
+                            @click="currentSlide = (currentSlide - 1 + images.length) % images.length"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-md transition-all"
+                        >
+                            <svg class="w-5 h-5 text-charcoal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                        <button 
+                            @click="currentSlide = (currentSlide + 1) % images.length"
+                            class="absolute left-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-md transition-all"
+                        >
+                            <svg class="w-5 h-5 text-charcoal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Thumbnail Navigation -->
+                    <div class="flex gap-2 mt-4 justify-center">
+                        <template x-for="(image, index) in images" :key="'thumb-' + index">
+                            <button 
+                                @click="currentSlide = index"
+                                class="w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden border-2 transition-all"
+                                :class="currentSlide === index ? 'border-brand-navy shadow-md' : 'border-border-gray opacity-70 hover:opacity-100'"
+                            >
+                                <img :src="image" :alt="'Thumbnail ' + (index + 1)" class="w-full h-full object-cover">
+                            </button>
+                        </template>
+                    </div>
+                </div>
+                
+                <!-- Product Info -->
+                <div class="space-y-6" id="order-section">
+                    <!-- Product Title -->
+                    <div>
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="bg-brand-navy/10 text-brand-navy text-xs font-bold px-3 py-1 rounded-full">بطارية 22,000mAh</span>
+                            <span class="bg-amber-100 text-amber-700 text-xs font-bold px-3 py-1 rounded-full">4 شرائح SIM</span>
+                            <span class="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">هاتف الصحراء</span>
+                        </div>
+                        <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal leading-tight">
+                            Hope K19 - هاتف المهام الصعبة
+                        </h1>
+                        <p class="text-gray-500 mt-2 text-base md:text-lg">أقوى هاتف للعمليات الشاقة والمناطق النائية - إصدار 2025</p>
+                    </div>
+                    
+                    <!-- Rating -->
+                    <div class="flex items-center gap-2">
+                        <div class="flex text-yellow-400">
+                            <template x-for="i in 5">
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                    <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                </svg>
+                            </template>
+                        </div>
+                        <span class="text-sm text-gray-600 font-medium">(+2500 تقييم إيجابي)</span>
+                    </div>
+                    
+                    <!-- Price Box -->
+                    <div class="bg-soft-gray rounded-xl p-5 border border-border-gray">
+                        <div class="flex items-baseline gap-3">
+                            <span class="text-3xl md:text-4xl font-bold text-brand-navy">1,999 ج.م</span>
+                            <span class="text-xl text-gray-400 line-through">2,200 ج.م</span>
+                            <span class="bg-red-100 text-red-600 text-sm font-medium px-2 py-1 rounded">وفر 201 ج.م</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-2">شامل ضريبة القيمة المضافة</p>
+                    </div>
+                    
+                    <!-- Bundle Selector -->
+                    <div class="space-y-3">
+                        <h3 class="font-semibold text-charcoal">اختر الكمية:</h3>
+                        
+                        <!-- Option 1: Single Piece -->
+                        <label 
+                            class="bundle-option flex items-center justify-between p-4 rounded-xl border-2 cursor-pointer transition-all"
+                            :class="selectedBundle === 1 ? 'border-brand-navy bg-blue-50/50' : 'border-border-gray hover:border-gray-300'"
+                        >
+                            <div class="flex items-center gap-3">
+                                <input 
+                                    type="radio" 
+                                    name="bundle" 
+                                    value="1" 
+                                    x-model="selectedBundle"
+                                    class="w-5 h-5 text-brand-navy focus:ring-brand-navy"
+                                >
+                                <div>
+                                    <span class="font-medium text-charcoal">قطعة واحدة</span>
+                                </div>
+                            </div>
+                            <span class="font-bold text-charcoal text-lg">1,999 ج.م</span>
+                        </label>
+                        
+                        <!-- Option 2: Bundle (Best Value) -->
+                        <label 
+                            class="bundle-option relative flex items-center justify-between p-4 rounded-xl border-2 cursor-pointer transition-all"
+                            :class="selectedBundle === 2 ? 'border-brand-navy bg-blue-50/50' : 'border-border-gray hover:border-gray-300'"
+                        >
+                            <!-- Best Value Badge -->
+                            <div class="absolute -top-3 right-4 bg-brand-green text-white text-xs font-bold px-3 py-1 rounded-full">
+                                الأكثر توفيراً
+                            </div>
+                            
+                            <div class="flex items-center gap-3">
+                                <input 
+                                    type="radio" 
+                                    name="bundle" 
+                                    value="2" 
+                                    x-model="selectedBundle"
+                                    class="w-5 h-5 text-brand-navy focus:ring-brand-navy"
+                                >
+                                <div>
+                                    <span class="font-medium text-charcoal">عرض قطعتين</span>
+                                    <p class="text-sm text-green-600 font-medium">وفر 248 ج.م</p>
+                                </div>
+                            </div>
+                            <div class="text-left">
+                                <span class="font-bold text-charcoal text-lg">3,750 ج.م</span>
+                                <p class="text-xs text-gray-400 line-through">3,998 ج.م</p>
+                            </div>
+                        </label>
+                    </div>
+                    
+                    <!-- CTA Button -->
+                    <button 
+                        @click="openOrderForm()"
+                        class="cta-pulse w-full bg-brand-navy hover:bg-brand-navy-dark text-white text-lg md:text-xl font-bold py-4 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                    >
+                        اطلب الآن والدفع عند الاستلام
+                    </button>
+                    
+                    <!-- Trust Signals -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-border-gray">
+                        <div class="flex flex-col items-center text-center gap-2">
+                            <div class="w-12 h-12 bg-soft-gray rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6 text-brand-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                                </svg>
+                            </div>
+                            <span class="text-xs md:text-sm font-medium text-charcoal">ضمان ٣ سنوات</span>
+                        </div>
+                        <div class="flex flex-col items-center text-center gap-2">
+                            <div class="w-12 h-12 bg-soft-gray rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6 text-brand-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <span class="text-xs md:text-sm font-medium text-charcoal">شحن سريع</span>
+                        </div>
+                        <div class="flex flex-col items-center text-center gap-2">
+                            <div class="w-12 h-12 bg-soft-gray rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6 text-brand-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                </svg>
+                            </div>
+                            <span class="text-xs md:text-sm font-medium text-charcoal">استبدال ١٤ يوم</span>
+                        </div>
+                        <div class="flex flex-col items-center text-center gap-2">
+                            <div class="w-12 h-12 bg-soft-gray rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6 text-brand-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                </svg>
+                            </div>
+                            <span class="text-xs md:text-sm font-medium text-charcoal">الدفع عند الاستلام</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Urgency Banner -->
+    <section class="bg-gradient-to-r from-red-600 via-red-500 to-orange-500 text-white py-3">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex items-center justify-center gap-3">
+                <span class="relative flex h-3 w-3">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
+                </span>
+                <p class="font-bold text-sm md:text-base">
+                    🔥 الكمية محدودة - احجز قطعتك الآن قبل نفاد المخزون
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Pillars Banner -->
+    <section class="bg-soft-gray py-8 border-y border-border-gray">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+                <div class="flex items-center gap-3">
+                    <div class="flex-shrink-0 w-14 h-14 bg-white rounded-xl shadow-sm flex items-center justify-center">
+                        <svg class="w-7 h-7 text-brand-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-charcoal text-sm md:text-base">الدفع عند الاستلام</h4>
+                        <p class="text-xs text-gray-500">لا حاجة لبطاقة ائتمان</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex-shrink-0 w-14 h-14 bg-white rounded-xl shadow-sm flex items-center justify-center">
+                        <svg class="w-7 h-7 text-brand-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-charcoal text-sm md:text-base">شحن لجميع المحافظات</h4>
+                        <p class="text-xs text-gray-500">توصيل لباب البيت</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex-shrink-0 w-14 h-14 bg-white rounded-xl shadow-sm flex items-center justify-center">
+                        <svg class="w-7 h-7 text-brand-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-charcoal text-sm md:text-base">استبدال واسترجاع</h4>
+                        <p class="text-xs text-gray-500">خلال ١٤ يوم</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex-shrink-0 w-14 h-14 bg-white rounded-xl shadow-sm flex items-center justify-center">
+                        <svg class="w-7 h-7 text-brand-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-charcoal text-sm md:text-base">ضمان لمدة ٣ سنوات</h4>
+                        <p class="text-xs text-gray-500">ضمان رسمي معتمد</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Media Showcase Gallery -->
+    <section class="py-12 md:py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold text-charcoal">شاهد Hope K19 عن قرب</h2>
+                <p class="text-gray-500 mt-2">تصميم متين وأنيق يجمع بين القوة والعملية</p>
+            </div>
+            
+            <!-- Hero Product Image - Official Shot -->
+            <div class="mb-16">
+                <div class="max-w-3xl mx-auto">
+                    <div class="relative group">
+                        <div class="absolute inset-0 bg-gradient-to-br from-brand-navy/30 to-orange-500/20 rounded-3xl transform rotate-1 group-hover:rotate-2 transition-transform duration-500"></div>
+                        <img 
+                            src="media/official.png" 
+                            alt="Hope K19 - الشكل الرسمي" 
+                            class="relative rounded-3xl shadow-2xl w-full object-cover group-hover:scale-[1.01] transition-transform duration-500"
+                        >
+                    </div>
+                    <div class="text-center mt-6">
+                        <h3 class="text-xl md:text-2xl font-bold text-charcoal">Hope K19 - Professional Series</h3>
+                        <p class="text-gray-500 mt-2">تصميم احترافي بهوائي خارجي وهيكل عسكري متين</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Section -->
+            <div class="mb-16">
+                <div class="max-w-4xl mx-auto">
+                    <div class="text-center mb-4">
+                        <span class="inline-flex items-center gap-2 bg-brand-navy/10 text-brand-navy text-sm font-medium px-4 py-2 rounded-full">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
+                            </svg>
+                            شاهد الفيديو التوضيحي
+                        </span>
+                    </div>
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl group cursor-pointer" x-data="{ playing: false }" @click="if(!playing) { $refs.video.play(); playing = true; }">
+                        <video 
+                            x-ref="video"
+                            class="w-full aspect-video object-cover"
+                            controls
+                            poster="media/official.png"
+                            @play="playing = true"
+                            @pause="playing = false"
+                            @ended="playing = false"
+                        >
+                            <source src="media/4dbozw-h264-hd.mp4" type="video/mp4">
+                        </video>
+                        <!-- Play Button Overlay -->
+                        <div 
+                            x-show="!playing"
+                            x-transition:leave="transition ease-in duration-200"
+                            x-transition:leave-start="opacity-100"
+                            x-transition:leave-end="opacity-0"
+                            class="absolute inset-0 flex items-center justify-center bg-black/30 pointer-events-none"
+                        >
+                            <div class="w-20 h-20 md:w-24 md:h-24 bg-white/90 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300">
+                                <svg class="w-10 h-10 md:w-12 md:h-12 text-brand-navy mr-[-4px]" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-center text-gray-500 text-sm mt-3">استعراض شامل لجميع مميزات وإمكانيات الجهاز</p>
+                </div>
+            </div>
+            
+            <!-- Product Images with Descriptions -->
+            <div class="space-y-20">
+                
+                <!-- Image 1: Rugged Design - Waterproof -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div class="order-2 lg:order-1">
+                        <div class="bg-gradient-to-br from-slate-700 to-slate-900 rounded-2xl p-6 md:p-8 text-white">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-white/70 text-sm">المتانة والحماية</span>
+                            </div>
+                            <h3 class="text-2xl md:text-3xl font-bold mb-4">هيكل مقاوم للماء والصدمات</h3>
+                            <p class="text-white/80 leading-relaxed">بنية صلبة من البلاستيك المقوى والمعدن المقاوم للصدأ. مصمم لتحمل الماء والغبار والسقوط من ارتفاعات عالية دون أي تلف.</p>
+                            <div class="flex flex-wrap gap-2 mt-6">
+                                <span class="bg-white/20 text-xs px-3 py-1 rounded-full">مقاوم للماء</span>
+                                <span class="bg-white/20 text-xs px-3 py-1 rounded-full">مقاوم للصدمات</span>
+                                <span class="bg-white/20 text-xs px-3 py-1 rounded-full">هيكل معدني</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-1 lg:order-2">
+                        <div class="relative group">
+                            <div class="absolute inset-0 bg-gradient-to-br from-slate-500/30 to-transparent rounded-3xl transform rotate-2 group-hover:rotate-4 transition-transform duration-500"></div>
+                            <img 
+                                src="media/waterproof.png" 
+                                alt="Hope K19 - مقاوم للماء والصدمات" 
+                                class="relative rounded-3xl shadow-2xl w-full object-cover aspect-[4/3] group-hover:scale-[1.02] transition-transform duration-500"
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 2: Power Bank Feature -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div class="order-1">
+                        <div class="relative group">
+                            <div class="absolute inset-0 bg-gradient-to-br from-amber-500/30 to-transparent rounded-3xl transform -rotate-2 group-hover:-rotate-4 transition-transform duration-500"></div>
+                            <img 
+                                src="media/charging-other-mobile.png" 
+                                alt="Hope K19 - شحن الهواتف الأخرى" 
+                                class="relative rounded-3xl shadow-2xl w-full object-cover aspect-[4/3] group-hover:scale-[1.02] transition-transform duration-500"
+                            >
+                        </div>
+                    </div>
+                    <div class="order-2">
+                        <div class="bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl p-6 md:p-8 text-white">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-white/70 text-sm">باور بانك مدمج</span>
+                            </div>
+                            <h3 class="text-2xl md:text-3xl font-bold mb-4">اشحن هاتفك الذكي في أي مكان</h3>
+                            <p class="text-white/80 leading-relaxed">بطارية 22,000mAh مع منفذ USB مستقل. في رحلات السفاري أو المواقع النائية، Hope K19 هو مصدر الطاقة البديل لجميع أجهزتك.</p>
+                            <div class="flex flex-wrap gap-2 mt-6">
+                                <span class="bg-white/20 text-xs px-3 py-1 rounded-full">22,000mAh</span>
+                                <span class="bg-white/20 text-xs px-3 py-1 rounded-full">شحن سريع</span>
+                                <span class="bg-white/20 text-xs px-3 py-1 rounded-full">وصلة متعددة</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 3: 4 SIM Cards -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div class="order-2 lg:order-1">
+                        <div class="bg-gradient-to-br from-brand-navy to-blue-900 rounded-2xl p-6 md:p-8 text-white">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-white/70 text-sm">تعدد الشرائح</span>
+                            </div>
+                            <h3 class="text-2xl md:text-3xl font-bold mb-4">4 شرائح SIM تعمل معاً</h3>
+                            <p class="text-white/80 leading-relaxed">شغّل فودافون واتصالات واورنج و WE في نفس الوقت. مثالي للمهندسين ورجال الأعمال الذين يحتاجون التنقل بين الشبكات.</p>
+                            <div class="flex flex-wrap gap-2 mt-6">
+                                <span class="bg-white/20 text-xs px-3 py-1 rounded-full">4 شرائح متزامنة</span>
+                                <span class="bg-white/20 text-xs px-3 py-1 rounded-full">كل الشبكات</span>
+                                <span class="bg-white/20 text-xs px-3 py-1 rounded-full">تبديل سهل</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-1 lg:order-2">
+                        <div class="relative group">
+                            <div class="absolute inset-0 bg-gradient-to-br from-brand-navy/30 to-transparent rounded-3xl transform rotate-2 group-hover:rotate-4 transition-transform duration-500"></div>
+                            <img 
+                                src="media/displaying 4 different SIM card.png" 
+                                alt="Hope K19 - 4 شرائح SIM" 
+                                class="relative rounded-3xl shadow-2xl w-full object-cover aspect-[4/3] group-hover:scale-[1.02] transition-transform duration-500"
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 4: Antenna Signal -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div class="order-1">
+                        <div class="relative group">
+                            <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/30 to-transparent rounded-3xl transform -rotate-2 group-hover:-rotate-4 transition-transform duration-500"></div>
+                            <img 
+                                src="media/antina-signal.png" 
+                                alt="Hope K19 - هوائي تقوية الإشارة" 
+                                class="relative rounded-3xl shadow-2xl w-full object-cover aspect-[3/4] group-hover:scale-[1.02] transition-transform duration-500"
+                            >
+                        </div>
+                    </div>
+                    <div class="order-2">
+                        <div class="bg-gradient-to-br from-emerald-600 to-teal-700 rounded-2xl p-6 md:p-8 text-white">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-white/70 text-sm">تقوية الإشارة</span>
+                            </div>
+                            <h3 class="text-2xl md:text-3xl font-bold mb-4">إشارة كاملة في قمم الجبال</h3>
+                            <p class="text-white/80 leading-relaxed">هوائي خارجي قابل للتمديد يلتقط أضعف الإشارات. في الصحاري والجبال والمناطق النائية، ستبقى على اتصال دائماً.</p>
+                            <div class="flex flex-wrap gap-2 mt-6">
+                                <span class="bg-white/20 text-xs px-3 py-1 rounded-full">هوائي خارجي</span>
+                                <span class="bg-white/20 text-xs px-3 py-1 rounded-full">تغطية أوسع</span>
+                                <span class="bg-white/20 text-xs px-3 py-1 rounded-full">إشارة مستقرة</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 5: Flashlight -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div class="order-2 lg:order-1">
+                        <div class="bg-gradient-to-br from-purple-600 to-indigo-800 rounded-2xl p-6 md:p-8 text-white">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-white/70 text-sm">إضاءة قوية</span>
+                            </div>
+                            <h3 class="text-2xl md:text-3xl font-bold mb-4">كشاف LED بمدى واسع</h3>
+                            <p class="text-white/80 leading-relaxed">كشاف فائق القوة يعمل بزر خارجي حتى والهاتف مغلق. مثالي للتخييم والرحلات الليلية وحالات الطوارئ.</p>
+                            <div class="flex flex-wrap gap-2 mt-6">
+                                <span class="bg-white/20 text-xs px-3 py-1 rounded-full">إضاءة قوية</span>
+                                <span class="bg-white/20 text-xs px-3 py-1 rounded-full">زر خارجي</span>
+                                <span class="bg-white/20 text-xs px-3 py-1 rounded-full">يعمل مغلقاً</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-1 lg:order-2">
+                        <div class="relative group">
+                            <div class="absolute inset-0 bg-gradient-to-br from-purple-500/30 to-transparent rounded-3xl transform rotate-2 group-hover:rotate-4 transition-transform duration-500"></div>
+                            <img 
+                                src="media/flashlight.png" 
+                                alt="Hope K19 - كشاف LED قوي" 
+                                class="relative rounded-3xl shadow-2xl w-full object-cover aspect-[4/3] group-hover:scale-[1.02] transition-transform duration-500"
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 6: Work Environment -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div class="order-1">
+                        <div class="relative group">
+                            <div class="absolute inset-0 bg-gradient-to-br from-amber-600/30 to-transparent rounded-3xl transform -rotate-2 group-hover:-rotate-4 transition-transform duration-500"></div>
+                            <img 
+                                src="media/close-up shot of a Civil Engineer's hand holding.png" 
+                                alt="Hope K19 - للمهندسين والعمال" 
+                                class="relative rounded-3xl shadow-2xl w-full object-cover aspect-[4/3] group-hover:scale-[1.02] transition-transform duration-500"
+                            >
+                        </div>
+                    </div>
+                    <div class="order-2">
+                        <div class="bg-gradient-to-br from-amber-700 to-yellow-800 rounded-2xl p-6 md:p-8 text-white">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-white/70 text-sm">بيئة العمل</span>
+                            </div>
+                            <h3 class="text-2xl md:text-3xl font-bold mb-4">رفيقك في مواقع البناء</h3>
+                            <p class="text-white/80 leading-relaxed">مصمم للمهندسين والفنيين في أقسى ظروف العمل. يتحمل الغبار والأتربة والحرارة العالية ويبقى يعمل بكفاءة.</p>
+                            <div class="flex flex-wrap gap-2 mt-6">
+                                <span class="bg-white/20 text-xs px-3 py-1 rounded-full">للمهندسين</span>
+                                <span class="bg-white/20 text-xs px-3 py-1 rounded-full">مواقع البناء</span>
+                                <span class="bg-white/20 text-xs px-3 py-1 rounded-full">عمل شاق</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 7: Desert Use -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div class="order-2 lg:order-1">
+                        <div class="bg-gradient-to-br from-orange-600 to-red-700 rounded-2xl p-6 md:p-8 text-white">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-white/70 text-sm">هاتف الصحراء</span>
+                            </div>
+                            <h3 class="text-2xl md:text-3xl font-bold mb-4">صُنع للمغامرات الكبرى</h3>
+                            <p class="text-white/80 leading-relaxed">سواء كنت في رحلة سفاري أو تخييم في الصحراء، Hope K19 سيبقى معك. بطارية تدوم أيام وإشارة لا تنقطع.</p>
+                            <div class="flex flex-wrap gap-2 mt-6">
+                                <span class="bg-white/20 text-xs px-3 py-1 rounded-full">رحلات السفاري</span>
+                                <span class="bg-white/20 text-xs px-3 py-1 rounded-full">التخييم</span>
+                                <span class="bg-white/20 text-xs px-3 py-1 rounded-full">المغامرات</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-1 lg:order-2">
+                        <div class="relative group">
+                            <div class="absolute inset-0 bg-gradient-to-br from-orange-500/30 to-transparent rounded-3xl transform rotate-2 group-hover:rotate-4 transition-transform duration-500"></div>
+                            <img 
+                                src="media/hope-k19-in-desert.png" 
+                                alt="Hope K19 - استخدام في الصحراء" 
+                                class="relative rounded-3xl shadow-2xl w-full object-cover aspect-[3/4] group-hover:scale-[1.02] transition-transform duration-500"
+                            >
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Important Notes Section -->
+    <section class="py-12 md:py-16 bg-amber-50 border-y border-amber-200">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="flex items-start gap-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center">
+                    <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-charcoal mb-3">ملاحظات هامة للمشتري</h3>
+                    <ul class="space-y-2 text-gray-700 text-sm">
+                        <li class="flex items-start gap-2">
+                            <span class="text-amber-500 font-bold">•</span>
+                            <span><strong>وظيفة الباور بانك:</strong> الجهاز يشحن الهواتف الذكية الحديثة مرة أو مرتين، وهو ممتاز للهواتف التقليدية.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-amber-500 font-bold">•</span>
+                            <span><strong>التطبيقات:</strong> يدعم نسخ مخففة من فيسبوك وواتساب، لكنه ليس هاتفاً ذكياً بنظام أندرويد كامل.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-amber-500 font-bold">•</span>
+                            <span><strong>الغرض الأساسي:</strong> مصمم للاتصالات والصمود الطويل، وليس لتصفح الإنترنت أو الألعاب.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="py-12 md:py-16 bg-brand-navy text-white">
+        <div class="max-w-3xl mx-auto px-4 text-center">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4">لا تفوت العرض - اطلب الآن!</h2>
+            <p class="text-white/80 mb-8">احصل على Hope-K19 الأصلي مع ضمان ٣ سنوات وشحن لجميع المحافظات</p>
+            <button 
+                @click="scrollToOrder()"
+                class="bg-white text-brand-navy hover:bg-gray-100 text-lg font-bold py-4 px-10 rounded-xl shadow-lg transition-all duration-300"
+            >
+                اطلب الآن - الدفع عند الاستلام
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-charcoal text-white py-8">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <a href="#" class="flex items-center gap-2 group">
+                    <div class="relative w-10 h-10">
+                        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-white transition-transform group-hover:scale-110 duration-300">
+                            <path d="M20 2.5L5 10V30L20 37.5L35 30V10L20 2.5Z" stroke="currentColor" stroke-width="3" fill="currentColor" fill-opacity="0.1"/>
+                            <path d="M21 9L13 21H19L17 31L27 17H21L23 9H21Z" fill="#F59E0B"/>
+                        </svg>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <span class="font-black text-2xl leading-none tracking-tight text-white">HOPE<span class="text-amber-500">K19</span></span>
+                        <span class="text-[10px] font-bold tracking-[0.2em] text-gray-400 uppercase">MILITARY GRADE</span>
+                    </div>
+                </a>
+                <p class="text-gray-400 text-sm text-center">© 2024 Hope-K19. جميع الحقوق محفوظة - المتجر الرسمي</p>
+                <div class="flex items-center gap-4">
+                    <span class="text-gray-400 text-sm">تواصل معنا:</span>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Sticky Mobile Footer -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-border-gray shadow-2xl p-3 md:hidden z-50">
+        <div class="flex items-center justify-between gap-3">
+            <div>
+                <p class="text-xs text-gray-500">السعر</p>
+                <p class="text-lg font-bold text-brand-navy" x-text="selectedBundle == 1 ? '1,999 ج.م' : '3,750 ج.م'">1,999 ج.م</p>
+            </div>
+            <button 
+                @click="openOrderForm()"
+                class="flex-1 bg-brand-navy hover:bg-brand-navy-dark text-white font-bold py-3 px-4 rounded-lg transition-colors"
+            >
+                اطلب الآن
+            </button>
+        </div>
+    </div>
+
+    <!-- Order Form Modal -->
+    <div 
+        x-show="showOrderForm" 
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="fixed inset-0 bg-black/50 z-50 flex items-end md:items-center justify-center p-4"
+        @click.self="showOrderForm = false"
+        style="display: none;"
+    >
+        <div 
+            x-show="showOrderForm"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="translate-y-full md:translate-y-0 md:scale-95 opacity-0"
+            x-transition:enter-end="translate-y-0 md:scale-100 opacity-100"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="translate-y-0 md:scale-100 opacity-100"
+            x-transition:leave-end="translate-y-full md:translate-y-0 md:scale-95 opacity-0"
+            class="bg-white rounded-t-2xl md:rounded-2xl w-full max-w-md max-h-[90vh] overflow-y-auto"
+        >
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-bold text-charcoal">أكمل طلبك</h3>
+                    <button @click="showOrderForm = false" class="text-gray-400 hover:text-gray-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Order Summary -->
+                <div class="bg-soft-gray rounded-xl p-4 mb-6">
+                    <div class="flex justify-between items-center">
+                        <span class="text-charcoal">الطلب:</span>
+                        <span class="font-semibold" x-text="selectedBundle == 1 ? 'Hope-K19 (قطعة واحدة)' : 'Hope-K19 (قطعتين)'"></span>
+                    </div>
+                    <div class="flex justify-between items-center mt-2 pt-2 border-t border-border-gray">
+                        <span class="text-charcoal">الإجمالي:</span>
+                        <span class="text-xl font-bold text-brand-navy" x-text="selectedBundle == 1 ? '1,999 ج.م' : '3,750 ج.م'"></span>
+                    </div>
+                </div>
+                
+                <!-- Form -->
+                <form @submit.prevent="submitOrder()" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-charcoal mb-1">الاسم الكامل *</label>
+                        <input 
+                            type="text" 
+                            x-model="orderForm.name"
+                            required
+                            class="w-full px-4 py-3 rounded-lg border border-border-gray focus:border-brand-navy focus:ring-2 focus:ring-brand-navy/20 outline-none transition-all"
+                            placeholder="أدخل اسمك الكامل"
+                        >
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-charcoal mb-1">رقم الهاتف *</label>
+                        <input 
+                            type="tel" 
+                            x-model="orderForm.phone"
+                            @input="orderForm.phone = convertToEnglishNumbers($event.target.value)"
+                            required
+                            class="w-full px-4 py-3 rounded-lg border border-border-gray focus:border-brand-navy focus:ring-2 focus:ring-brand-navy/20 outline-none transition-all text-left"
+                            dir="ltr"
+                            placeholder="01xxxxxxxxx"
+                        >
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-charcoal mb-1">رقم إضافي أو الواتساب *</label>
+                        <input 
+                            type="tel" 
+                            x-model="orderForm.whatsapp"
+                            @input="orderForm.whatsapp = convertToEnglishNumbers($event.target.value)"
+                            required
+                            class="w-full px-4 py-3 rounded-lg border border-border-gray focus:border-brand-navy focus:ring-2 focus:ring-brand-navy/20 outline-none transition-all text-left"
+                            dir="ltr"
+                            placeholder="01xxxxxxxxx"
+                        >
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-charcoal mb-1">المحافظة *</label>
+                        <select 
+                            x-model="orderForm.governorate"
+                            required
+                            class="w-full px-4 py-3 rounded-lg border border-border-gray focus:border-brand-navy focus:ring-2 focus:ring-brand-navy/20 outline-none transition-all bg-white"
+                        >
+                            <option value="">اختر المحافظة</option>
+                            <option value="القاهرة">القاهرة</option>
+                            <option value="الجيزة">الجيزة</option>
+                            <option value="الإسكندرية">الإسكندرية</option>
+                            <option value="الدقهلية">الدقهلية</option>
+                            <option value="الشرقية">الشرقية</option>
+                            <option value="المنوفية">المنوفية</option>
+                            <option value="القليوبية">القليوبية</option>
+                            <option value="البحيرة">البحيرة</option>
+                            <option value="الغربية">الغربية</option>
+                            <option value="كفر الشيخ">كفر الشيخ</option>
+                            <option value="دمياط">دمياط</option>
+                            <option value="بورسعيد">بورسعيد</option>
+                            <option value="الإسماعيلية">الإسماعيلية</option>
+                            <option value="السويس">السويس</option>
+                            <option value="شمال سيناء">شمال سيناء</option>
+                            <option value="جنوب سيناء">جنوب سيناء</option>
+                            <option value="البحر الأحمر">البحر الأحمر</option>
+                            <option value="الفيوم">الفيوم</option>
+                            <option value="بني سويف">بني سويف</option>
+                            <option value="المنيا">المنيا</option>
+                            <option value="أسيوط">أسيوط</option>
+                            <option value="سوهاج">سوهاج</option>
+                            <option value="قنا">قنا</option>
+                            <option value="الأقصر">الأقصر</option>
+                            <option value="أسوان">أسوان</option>
+                            <option value="الوادي الجديد">الوادي الجديد</option>
+                            <option value="مطروح">مطروح</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-charcoal mb-1">العنوان بالتفصيل *</label>
+                        <textarea 
+                            x-model="orderForm.address"
+                            required
+                            rows="2"
+                            class="w-full px-4 py-3 rounded-lg border border-border-gray focus:border-brand-navy focus:ring-2 focus:ring-brand-navy/20 outline-none transition-all resize-none"
+                            placeholder="المنطقة أو الحي - الشارع - علامة مميزة"
+                        ></textarea>
+                    </div>
+                    
+                    <button 
+                        type="submit"
+                        class="w-full bg-brand-navy hover:bg-brand-navy-dark text-white font-bold py-4 rounded-xl transition-colors duration-300"
+                    >
+                        تأكيد الطلب - الدفع عند الاستلام
+                    </button>
+                    
+                    <p class="text-xs text-gray-500 text-center">سيتم التواصل معك خلال ٢٤ ساعة لتأكيد الطلب</p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Spacer for mobile sticky footer -->
+    <div class="h-20 md:hidden"></div>
+
+    <script>
+        function shopApp() {
+            return {
+                selectedBundle: 1,
+                showOrderForm: false,
+                showSuccessModal: false,
+                orderForm: {
+                    name: '',
+                    phone: '',
+                    whatsapp: '',
+                    governorate: '',
+                    address: ''
+                },
+                confirmedOrder: {
+                    bundle: 1,
+                    name: '',
+                    phone: '',
+                    whatsapp: '',
+                    governorate: '',
+                    address: ''
+                },
+                
+                convertToEnglishNumbers(str) {
+                    const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+                    const englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+                    let result = str;
+                    for (let i = 0; i < arabicNumbers.length; i++) {
+                        result = result.replace(new RegExp(arabicNumbers[i], 'g'), englishNumbers[i]);
+                    }
+                    return result;
+                },
+                images: [
+                    'media/613Qs94BNKL._AC_SL1500__11zon.webp',
+                    'media/495378672_122163648458382936_5354201003752853940_n.jpg',
+                    'media/51Ft+jIPKaL._AC_.jpg',
+                    'media/51hM6sS8Z9L._AC_SL1200_.jpg'
+                ],
+                
+                scrollToOrder() {
+                    document.getElementById('order-section').scrollIntoView({ behavior: 'smooth' });
+                },
+                
+                openOrderForm() {
+                    this.showOrderForm = true;
+                },
+                
+                // رابط الخادم المحلي
+                API_URL: '/api/orders',
+                isSubmitting: false,
+                
+                async submitOrder() {
+                    if (this.isSubmitting) return;
+                    this.isSubmitting = true;
+                    
+                    // Save order data for confirmation page
+                    this.confirmedOrder = {
+                        bundle: this.selectedBundle,
+                        name: this.orderForm.name,
+                        phone: this.orderForm.phone,
+                        whatsapp: this.orderForm.whatsapp,
+                        governorate: this.orderForm.governorate,
+                        address: this.orderForm.address
+                    };
+                    
+                    // Prepare data for Google Sheets
+                    const orderData = {
+                        name: this.orderForm.name,
+                        phone: this.orderForm.phone,
+                        whatsapp: this.orderForm.whatsapp,
+                        governorate: this.orderForm.governorate,
+                        address: this.orderForm.address,
+                        product: 'موبايل المهام الخاصة K19',
+                        quantity: this.selectedBundle == 1 ? 'قطعة واحدة' : 'قطعتين',
+                        total: this.selectedBundle == 1 ? '1,999 ج.م' : '3,750 ج.م'
+                    };
+                    
+                    // Send to Google Sheets via local server
+                    try {
+                        const response = await fetch(this.API_URL, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(orderData)
+                        });
+                        const result = await response.json();
+                        console.log('✅ Order sent to Google Sheets:', result);
+                    } catch (error) {
+                        console.error('❌ Error sending to Google Sheets:', error);
+                    }
+                    
+                    this.isSubmitting = false;
+                    
+                    // Save order to localStorage for confirmation page
+                    const confirmData = {
+                        name: this.confirmedOrder.name,
+                        phone: this.confirmedOrder.phone,
+                        whatsapp: this.confirmedOrder.whatsapp,
+                        governorate: this.confirmedOrder.governorate,
+                        address: this.confirmedOrder.address,
+                        quantity: this.confirmedOrder.bundle == 1 ? 'قطعة واحدة' : 'قطعتين',
+                        total: this.confirmedOrder.bundle == 1 ? '1,999 ج.م' : '3,750 ج.م'
+                    };
+                    localStorage.setItem('confirmedOrder', JSON.stringify(confirmData));
+                    
+                    // Redirect to confirmation page
+                    window.location.href = '/confirm';
+                }
+            }
+        }
+        
+    </script>
+
+</body>
+</html>
