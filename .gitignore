@@ -1,6 +1,8 @@
 # Dependencies
 node_modules/
 server/node_modules/
+package-lock.json
+server/package-lock.json
 
 # Credentials (sensitive)
 server/credentials.json
@@ -18,3 +20,12 @@ Thumbs.db
 # Logs
 *.log
 npm-debug.log*
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Markdown docs (setup guides)
+GOOGLE_SHEETS_SETUP.md
