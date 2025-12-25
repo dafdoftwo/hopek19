@@ -1,0 +1,12 @@
+{
+  "name": "hope-k19",
+  "version": "1.0.0",
+  "description": "Hope K19 - متجر الهاتف العسكري",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node server/server.js"
+  },
+  "dependencies": {
+    "googleapis": "^128.0.0"
+  }
+}
