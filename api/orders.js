@@ -152,18 +152,19 @@ module.exports = async (req, res) => {
                 phone,               // C: رقم الهاتف
                 whatsapp || phone,   // D: رقم الواتساب
                 governorate,         // E: المحافظة
-                'جديد',              // F: الحالة
+                '',                  // F: فارغ
                 address,             // G: تفاصيل العنوان
                 orderDetails,        // H: تفاصيل الطلب (عدد القطع والسعر)
                 '',                  // I: فارغ
                 '',                  // J: فارغ
-                'موبايل المهام الخاصة K19' // K: المنتج
+                'موبايل المهام الخاصة K19', // K: المنتج
+                'جديد'               // L: الحالة
             ];
 
             // Append to Google Sheet
             await sheets.spreadsheets.values.append({
                 spreadsheetId: SPREADSHEET_ID,
-                range: `${SHEET_NAME}!A:K`,
+                range: `${SHEET_NAME}!A:L`,
                 valueInputOption: 'USER_ENTERED',
                 insertDataOption: 'INSERT_ROWS',
                 resource: {
