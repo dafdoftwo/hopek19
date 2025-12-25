@@ -4,6 +4,18 @@
     {
       "src": "api/orders.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "confirm.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "media/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
@@ -16,8 +28,16 @@
       "dest": "/api/orders.js"
     },
     {
-      "src": "/(.*)",
-      "dest": "/$1"
+      "src": "/confirm",
+      "dest": "/confirm.html"
+    },
+    {
+      "src": "/media/(.*)",
+      "dest": "/media/$1"
+    },
+    {
+      "src": "/",
+      "dest": "/index.html"
     }
   ]
 }
