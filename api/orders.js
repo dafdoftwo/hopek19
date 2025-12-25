@@ -1,4 +1,66 @@
 const { google } = require('googleapis');
+const https = require('https');
+
+// TikTok Events API Configuration
+const TIKTOK_PIXEL_ID = process.env.TIKTOK_PIXEL_ID;
+const TIKTOK_ACCESS_TOKEN = process.env.TIKTOK_ACCESS_TOKEN;
+
+// Send TikTok Conversion Event
+async function sendTikTokEvent(eventData) {
+    if (!TIKTOK_PIXEL_ID || !TIKTOK_ACCESS_TOKEN) {
+        console.log('TikTok credentials not configured, skipping event');
+        return;
+    }
+
+    const payload = JSON.stringify({
+        pixel_code: TIKTOK_PIXEL_ID,
+        event: 'CompletePayment',
+        event_id: `order_${Date.now()}`,
+        timestamp: new Date().toISOString(),
+        context: {
+            user: {
+                phone_number: eventData.phone ? require('crypto').createHash('sha256').update(eventData.phone).digest('hex') : undefined
+            }
+        },
+        properties: {
+            contents: [{
+                content_name: 'Hope K19',
+                quantity: eventData.quantity || 1
+            }],
+            currency: 'EGP',
+            value: parseFloat(eventData.total?.replace(/[^0-9.]/g, '')) || 1999
+        }
+    });
+
+    return new Promise((resolve) => {
+        const options = {
+            hostname: 'business-api.tiktok.com',
+            path: '/open_api/v1.3/pixel/track/',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Token': TIKTOK_ACCESS_TOKEN
+            }
+        };
+
+        const req = https.request(options, (res) => {
+            let data = '';
+            res.on('data', chunk => data += chunk);
+            res.on('end', () => {
+                console.log('TikTok Event Response:', data);
+                resolve(data);
+            });
+        });
+
+        req.on('error', (e) => {
+            console.error('TikTok Event Error:', e.message);
+            resolve(null);
+        });
+
+        req.write(payload);
+        req.end();
+    });
+}
 
 // Google Sheets Configuration from Environment Variables
 const SPREADSHEET_ID = process.env.GOOGLE_SPREADSHEET_ID;
@@ -110,6 +172,9 @@ module.exports = async (req, res) => {
             });
 
             console.log('✅ تم إضافة طلب جديد:', { name, phone, orderDate });
+
+            // Send TikTok Conversion Event
+            await sendTikTokEvent({ phone, quantity, total });
 
             return res.status(200).json({ 
                 success: true, 
