@@ -5,15 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hope-K19 | المتجر الرسمي</title>
     
-    <!-- Google Fonts - Tajawal -->
+    <!-- DNS Prefetch for faster external resource loading -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    
+    <!-- Preconnect for critical resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Preload critical font -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" as="style">
+    
+    <!-- Google Fonts - Tajawal with display swap -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet"></noscript>
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Alpine.js -->
+    <!-- Alpine.js - deferred for non-blocking -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
     <script>
@@ -192,6 +204,8 @@
                                 :alt="'Hope-K19 Product Image ' + (index + 1)"
                                 class="absolute inset-0 w-full h-full object-contain slider-image mix-blend-multiply"
                                 :class="{ 'opacity-100': currentSlide === index, 'opacity-0': currentSlide !== index }"
+                                loading="lazy"
+                                decoding="async"
                             >
                         </template>
                         
@@ -222,7 +236,7 @@
                                 class="w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden border-2 transition-all"
                                 :class="currentSlide === index ? 'border-brand-navy shadow-md' : 'border-border-gray opacity-70 hover:opacity-100'"
                             >
-                                <img :src="image" :alt="'Thumbnail ' + (index + 1)" class="w-full h-full object-cover">
+                                <img :src="image" :alt="'Thumbnail ' + (index + 1)" class="w-full h-full object-cover" loading="lazy" decoding="async">
                             </button>
                         </template>
                     </div>
@@ -451,6 +465,8 @@
                             src="media/official.png" 
                             alt="Hope K19 - الشكل الرسمي" 
                             class="relative rounded-3xl shadow-2xl w-full object-cover group-hover:scale-[1.01] transition-transform duration-500"
+                            loading="lazy"
+                            decoding="async"
                         >
                     </div>
                     <div class="text-center mt-6">
@@ -481,7 +497,7 @@
                             @pause="playing = false"
                             @ended="playing = false"
                         >
-                            <source src="media/4dbozw-h264-hd.mp4" type="video/mp4">
+                            <source src="media/4dbozw-compressed.mp4" type="video/mp4">
                         </video>
                         <!-- Play Button Overlay -->
                         <div 
@@ -533,6 +549,8 @@
                                 src="media/waterproof.png" 
                                 alt="Hope K19 - مقاوم للماء والصدمات" 
                                 class="relative rounded-3xl shadow-2xl w-full object-cover aspect-[4/3] group-hover:scale-[1.02] transition-transform duration-500"
+                                loading="lazy"
+                                decoding="async"
                             >
                         </div>
                     </div>
@@ -547,6 +565,8 @@
                                 src="media/charging-other-mobile.png" 
                                 alt="Hope K19 - شحن الهواتف الأخرى" 
                                 class="relative rounded-3xl shadow-2xl w-full object-cover aspect-[4/3] group-hover:scale-[1.02] transition-transform duration-500"
+                                loading="lazy"
+                                decoding="async"
                             >
                         </div>
                     </div>
@@ -599,6 +619,8 @@
                                 src="media/displaying 4 different SIM card.png" 
                                 alt="Hope K19 - 4 شرائح SIM" 
                                 class="relative rounded-3xl shadow-2xl w-full object-cover aspect-[4/3] group-hover:scale-[1.02] transition-transform duration-500"
+                                loading="lazy"
+                                decoding="async"
                             >
                         </div>
                     </div>
@@ -613,6 +635,8 @@
                                 src="media/antina-signal.png" 
                                 alt="Hope K19 - هوائي تقوية الإشارة" 
                                 class="relative rounded-3xl shadow-2xl w-full object-cover aspect-[3/4] group-hover:scale-[1.02] transition-transform duration-500"
+                                loading="lazy"
+                                decoding="async"
                             >
                         </div>
                     </div>
@@ -665,6 +689,8 @@
                                 src="media/flashlight.png" 
                                 alt="Hope K19 - كشاف LED قوي" 
                                 class="relative rounded-3xl shadow-2xl w-full object-cover aspect-[4/3] group-hover:scale-[1.02] transition-transform duration-500"
+                                loading="lazy"
+                                decoding="async"
                             >
                         </div>
                     </div>
@@ -679,6 +705,8 @@
                                 src="media/close-up shot of a Civil Engineer's hand holding.png" 
                                 alt="Hope K19 - للمهندسين والعمال" 
                                 class="relative rounded-3xl shadow-2xl w-full object-cover aspect-[4/3] group-hover:scale-[1.02] transition-transform duration-500"
+                                loading="lazy"
+                                decoding="async"
                             >
                         </div>
                     </div>
@@ -731,6 +759,8 @@
                                 src="media/hope-k19-in-desert.png" 
                                 alt="Hope K19 - استخدام في الصحراء" 
                                 class="relative rounded-3xl shadow-2xl w-full object-cover aspect-[3/4] group-hover:scale-[1.02] transition-transform duration-500"
+                                loading="lazy"
+                                decoding="async"
                             >
                         </div>
                     </div>
