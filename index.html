@@ -1206,7 +1206,7 @@
     </div>
 
     <!-- Sticky Mobile CTA -->
-    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-3 md:hidden z-50 safe-area-bottom">
+    <div x-show="!showOrderForm" class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-3 md:hidden z-50 safe-area-bottom">
         <button 
             @click="openOrderForm()"
             class="w-full bg-brand-navy hover:bg-brand-navy-dark text-white font-bold py-4 rounded-xl shadow-lg flex items-center justify-center gap-2"
