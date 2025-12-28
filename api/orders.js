@@ -9,37 +9,47 @@ const TIKTOK_ACCESS_TOKEN = process.env.TIKTOK_ACCESS_TOKEN;
 const FACEBOOK_PIXEL_ID = process.env.FACEBOOK_PIXEL_ID;
 const FACEBOOK_ACCESS_TOKEN = process.env.FACEBOOK_ACCESS_TOKEN;
 
-// Send TikTok Conversion Event
-async function sendTikTokEvent(eventData) {
+// Send TikTok Event (Lead or CompletePayment)
+async function sendTikTokEvent(eventData, eventType = 'Lead') {
     if (!TIKTOK_PIXEL_ID || !TIKTOK_ACCESS_TOKEN) {
         console.log('TikTok credentials not configured, skipping event');
         return;
     }
 
+    const crypto = require('crypto');
+    const eventTime = Math.floor(Date.now() / 1000);
+    
     const payload = JSON.stringify({
-        pixel_code: TIKTOK_PIXEL_ID,
-        event: 'CompletePayment',
-        event_id: `order_${Date.now()}`,
-        timestamp: new Date().toISOString(),
-        context: {
+        event_source: 'web',
+        event_source_id: TIKTOK_PIXEL_ID,
+        data: [{
+            event: eventType,
+            event_id: `${eventType.toLowerCase()}_${Date.now()}`,
+            event_time: eventTime,
             user: {
-                phone_number: eventData.phone ? require('crypto').createHash('sha256').update(eventData.phone).digest('hex') : undefined
-            }
-        },
-        properties: {
-            contents: [{
+                phone: eventData.phone ? crypto.createHash('sha256').update(eventData.phone).digest('hex') : undefined,
+                ip: eventData.ip || undefined,
+                user_agent: eventData.userAgent || undefined
+            },
+            properties: {
+                content_type: 'product',
                 content_name: 'Hope K19',
-                quantity: eventData.quantity || 1
-            }],
-            currency: 'EGP',
-            value: parseFloat(eventData.total?.replace(/[^0-9.]/g, '')) || 1999
-        }
+                content_id: 'hope-k19',
+                content_category: 'Mobile Phone',
+                currency: 'EGP',
+                value: parseFloat(eventData.total?.replace(/[^0-9.]/g, '')) || 1999,
+                num_items: eventData.quantity || 1
+            },
+            page: {
+                url: eventData.url || 'https://hopek19.vercel.app/'
+            }
+        }]
     });
 
     return new Promise((resolve) => {
         const options = {
             hostname: 'business-api.tiktok.com',
-            path: '/open_api/v1.3/pixel/track/',
+            path: '/open_api/v1.3/event/track/',
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -240,9 +250,9 @@ module.exports = async (req, res) => {
 
             console.log('✅ تم إضافة طلب جديد:', { name, phone, orderDate });
 
-            // Send Conversion Events (TikTok & Facebook)
+            // Send Conversion Events (TikTok Lead & Facebook Lead)
             await Promise.all([
-                sendTikTokEvent({ phone, quantity, total }),
+                sendTikTokEvent({ phone, quantity, total }, 'Lead'),
                 sendFacebookEvent({ phone, quantity, total })
             ]);
 
