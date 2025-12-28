@@ -5,6 +5,10 @@ const https = require('https');
 const TIKTOK_PIXEL_ID = process.env.TIKTOK_PIXEL_ID;
 const TIKTOK_ACCESS_TOKEN = process.env.TIKTOK_ACCESS_TOKEN;
 
+// Facebook Conversions API Configuration
+const FACEBOOK_PIXEL_ID = process.env.FACEBOOK_PIXEL_ID;
+const FACEBOOK_ACCESS_TOKEN = process.env.FACEBOOK_ACCESS_TOKEN;
+
 // Send TikTok Conversion Event
 async function sendTikTokEvent(eventData) {
     if (!TIKTOK_PIXEL_ID || !TIKTOK_ACCESS_TOKEN) {
@@ -54,6 +58,68 @@ async function sendTikTokEvent(eventData) {
 
         req.on('error', (e) => {
             console.error('TikTok Event Error:', e.message);
+            resolve(null);
+        });
+
+        req.write(payload);
+        req.end();
+    });
+}
+
+// Send Facebook Conversion Event
+async function sendFacebookEvent(eventData) {
+    if (!FACEBOOK_PIXEL_ID || !FACEBOOK_ACCESS_TOKEN) {
+        console.log('Facebook credentials not configured, skipping event');
+        return;
+    }
+
+    const crypto = require('crypto');
+    const eventTime = Math.floor(Date.now() / 1000);
+    
+    const payload = JSON.stringify({
+        data: [{
+            event_name: 'Purchase',
+            event_time: eventTime,
+            event_id: `order_${Date.now()}`,
+            action_source: 'website',
+            user_data: {
+                ph: eventData.phone ? [crypto.createHash('sha256').update(eventData.phone).digest('hex')] : undefined,
+                country: [crypto.createHash('sha256').update('eg').digest('hex')]
+            },
+            custom_data: {
+                currency: 'EGP',
+                value: parseFloat(eventData.total?.replace(/[^0-9.]/g, '')) || 1999,
+                content_name: 'Hope K19',
+                content_type: 'product',
+                contents: [{
+                    id: 'hope-k19',
+                    quantity: eventData.quantity || 1
+                }]
+            }
+        }]
+    });
+
+    return new Promise((resolve) => {
+        const options = {
+            hostname: 'graph.facebook.com',
+            path: `/v18.0/${FACEBOOK_PIXEL_ID}/events?access_token=${FACEBOOK_ACCESS_TOKEN}`,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+
+        const req = https.request(options, (res) => {
+            let data = '';
+            res.on('data', chunk => data += chunk);
+            res.on('end', () => {
+                console.log('Facebook Event Response:', data);
+                resolve(data);
+            });
+        });
+
+        req.on('error', (e) => {
+            console.error('Facebook Event Error:', e.message);
             resolve(null);
         });
 
@@ -174,8 +240,11 @@ module.exports = async (req, res) => {
 
             console.log('✅ تم إضافة طلب جديد:', { name, phone, orderDate });
 
-            // Send TikTok Conversion Event
-            await sendTikTokEvent({ phone, quantity, total });
+            // Send Conversion Events (TikTok & Facebook)
+            await Promise.all([
+                sendTikTokEvent({ phone, quantity, total }),
+                sendFacebookEvent({ phone, quantity, total })
+            ]);
 
             return res.status(200).json({ 
                 success: true, 
