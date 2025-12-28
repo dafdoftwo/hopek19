@@ -17,6 +17,12 @@
     'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '2382331805602649');
     fbq('track', 'PageView');
+    // Track Lead event on confirmation page
+    fbq('track', 'Lead', {
+        content_name: 'Hope K19',
+        content_category: 'Mobile Phone',
+        currency: 'EGP'
+    });
     </script>
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=2382331805602649&ev=PageView&noscript=1"
@@ -32,6 +38,11 @@
 
       ttq.load('D56KUNJC77U7I264VFPG');
       ttq.page();
+      // Track Lead/SubmitForm event on confirmation page
+      ttq.track('SubmitForm', {
+          content_name: 'Hope K19',
+          content_type: 'product'
+      });
     }(window, document, 'ttq');
     </script>
     <!-- TikTok Pixel Code End -->
