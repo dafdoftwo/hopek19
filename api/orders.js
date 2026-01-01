@@ -41,7 +41,7 @@ async function sendTikTokEvent(eventData, eventType = 'Lead') {
                 num_items: eventData.quantity || 1
             },
             page: {
-                url: eventData.url || 'https://hopek19.vercel.app/'
+                url: eventData.url || 'https://hopek19-omega.vercel.app/'
             }
         }]
     });
