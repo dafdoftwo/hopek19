@@ -7,6 +7,7 @@
     "dev": "node server/server.js"
   },
   "dependencies": {
-    "googleapis": "^128.0.0"
+    "googleapis": "^128.0.0",
+    "sharp": "^0.34.5"
   }
 }
