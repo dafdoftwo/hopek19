@@ -41,7 +41,7 @@ async function sendTikTokEvent(env, eventData, eventType = 'Lead') {
                 num_items: eventData.quantity || 1
             },
             page: {
-                url: 'https://classy-entremet-a4d6d1.netlify.app/'
+                url: 'https://hopek19.pages.dev/'
             }
         }]
     };
