@@ -41,7 +41,7 @@ async function sendTikTokEvent(eventData, eventType = 'Lead') {
                 num_items: eventData.quantity || 1
             },
             page: {
-                url: eventData.url || 'https://hopek19-omega.vercel.app/'
+                url: eventData.url || 'https://classy-entremet-a4d6d1.netlify.app/'
             }
         }]
     });
@@ -171,48 +171,56 @@ function getEgyptDateTime() {
     return now.toLocaleString('en-GB', options).replace(',', '');
 }
 
-// Vercel Serverless Function Handler
-module.exports = async (req, res) => {
-    // Enable CORS
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+// Netlify Serverless Function Handler
+const handler = async (event, context) => {
+    const headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Content-Type': 'application/json'
+    };
 
     // Handle preflight request
-    if (req.method === 'OPTIONS') {
-        return res.status(200).end();
+    if (event.httpMethod === 'OPTIONS') {
+        return { statusCode: 200, headers, body: '' };
     }
 
     // Health check endpoint
-    if (req.method === 'GET') {
-        return res.status(200).json({ 
-            status: 'OK', 
-            message: 'الخادم يعمل بشكل طبيعي',
-            timestamp: getEgyptDateTime()
-        });
+    if (event.httpMethod === 'GET') {
+        return {
+            statusCode: 200,
+            headers,
+            body: JSON.stringify({
+                status: 'OK',
+                message: 'الخادم يعمل بشكل طبيعي',
+                timestamp: getEgyptDateTime()
+            })
+        };
     }
 
     // Handle POST request for orders
-    if (req.method === 'POST') {
+    if (event.httpMethod === 'POST') {
         try {
-            const { name, phone, whatsapp, governorate, address, product, quantity, total } = req.body;
+            const body = JSON.parse(event.body);
+            const { name, phone, whatsapp, governorate, address, product, quantity, total } = body;
             
             // Validate required fields
             if (!name || !phone || !governorate || !address) {
-                return res.status(400).json({ 
-                    success: false, 
-                    message: 'جميع الحقول مطلوبة' 
-                });
+                return {
+                    statusCode: 400,
+                    headers,
+                    body: JSON.stringify({ success: false, message: 'جميع الحقول مطلوبة' })
+                };
             }
 
             // Check environment variables
             if (!SPREADSHEET_ID || !process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || !process.env.GOOGLE_PRIVATE_KEY) {
                 console.error('Missing required environment variables');
-                return res.status(500).json({ 
-                    success: false, 
-                    message: 'خطأ في إعدادات الخادم' 
-                });
+                return {
+                    statusCode: 500,
+                    headers,
+                    body: JSON.stringify({ success: false, message: 'خطأ في إعدادات الخادم' })
+                };
             }
 
             // Get auth and sheets client
@@ -256,25 +264,28 @@ module.exports = async (req, res) => {
                 sendFacebookEvent({ phone, quantity, total })
             ]);
 
-            return res.status(200).json({ 
-                success: true, 
-                message: 'تم استلام الطلب بنجاح',
-                orderDate: orderDate
-            });
+            return {
+                statusCode: 200,
+                headers,
+                body: JSON.stringify({ success: true, message: 'تم استلام الطلب بنجاح', orderDate: orderDate })
+            };
 
         } catch (error) {
             console.error('❌ خطأ في إضافة الطلب:', error.message);
-            return res.status(500).json({ 
-                success: false, 
-                message: 'حدث خطأ في حفظ الطلب',
-                error: error.message 
-            });
+            return {
+                statusCode: 500,
+                headers,
+                body: JSON.stringify({ success: false, message: 'حدث خطأ في حفظ الطلب', error: error.message })
+            };
         }
     }
 
     // Method not allowed
-    return res.status(405).json({ 
-        success: false, 
-        message: 'Method not allowed' 
-    });
+    return {
+        statusCode: 405,
+        headers,
+        body: JSON.stringify({ success: false, message: 'Method not allowed' })
+    };
 };
+
+module.exports = { handler };
