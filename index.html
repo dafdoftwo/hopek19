@@ -586,11 +586,32 @@
                             شاهد الفيديو التوضيحي
                         </span>
                     </div>
-                    <div class="relative rounded-2xl overflow-hidden shadow-2xl group cursor-pointer" x-data="{ playing: false }" @click="if(!playing) { $refs.video.play(); playing = true; }">
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl group cursor-pointer" 
+                         x-data="{ 
+                             playing: false,
+                             init() {
+                                 const video = this.$refs.video;
+                                 const observer = new IntersectionObserver((entries) => {
+                                     entries.forEach(entry => {
+                                         if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+                                             video.play().catch(() => {});
+                                             this.playing = true;
+                                         } else if (!entry.isIntersecting && this.playing) {
+                                             video.pause();
+                                             this.playing = false;
+                                         }
+                                     });
+                                 }, { threshold: 0.5 });
+                                 observer.observe(video);
+                             }
+                         }" 
+                         @click="if(!playing) { $refs.video.play(); playing = true; }">
                         <video 
                             x-ref="video"
                             class="w-full aspect-video object-cover"
                             controls
+                            muted
+                            playsinline
                             poster="media/optimized/official.webp"
                             @play="playing = true"
                             @pause="playing = false"
