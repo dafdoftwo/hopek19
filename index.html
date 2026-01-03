@@ -588,7 +588,7 @@
                          @click="if(!playing) { $refs.video.play(); playing = true; }">
                         <video 
                             x-ref="video"
-                            class="w-full aspect-video object-cover"
+                            class="w-full aspect-square md:aspect-video object-cover"
                             controls
                             playsinline
                             poster="media/optimized/official.webp"
