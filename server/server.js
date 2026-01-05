@@ -60,6 +60,16 @@ app.post('/api/orders', async (req, res) => {
         // Prepare row data
         const orderDate = getEgyptDateTime();
         const orderDetails = `${quantity || 'قطعة واحدة'} - ${total || '1,999 ج.م'}`;
+        
+        // محافظات الصعيد والبحر الأحمر ومطروح والوادي
+        const upperEgyptGovernorates = [
+            'الفيوم', 'المنيا', 'أسيوط', 'سوهاج', 'قنا', 'الأقصر', 'أسوان',
+            'البحر الأحمر', 'مطروح', 'الوادي الجديد', 'شمال سيناء', 'جنوب سيناء'
+        ];
+        
+        // تحديد حالة العمود L بناءً على المحافظة
+        const statusL = upperEgyptGovernorates.includes(governorate) ? 'في انتظار تأكيد العميل' : 'جديد';
+        
         const rowData = [
             orderDate,           // A: تاريخ الطلب
             name,                // B: الاسم
@@ -71,13 +81,14 @@ app.post('/api/orders', async (req, res) => {
             orderDetails,        // H: تفاصيل الطلب (عدد القطع والسعر)
             '',                  // I: فارغ
             '',                  // J: فارغ
-            'موبايل المهام الخاصة K19' // K: المنتج
+            'موبايل المهام الخاصة K19', // K: المنتج
+            statusL              // L: حالة التأكيد (للصعيد)
         ];
 
         // Append to Google Sheet
         await sheets.spreadsheets.values.append({
             spreadsheetId: SPREADSHEET_ID,
-            range: `${SHEET_NAME}!A:K`,
+            range: `${SHEET_NAME}!A:L`,
             valueInputOption: 'USER_ENTERED',
             insertDataOption: 'INSERT_ROWS',
             resource: {
