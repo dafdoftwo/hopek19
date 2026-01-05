@@ -273,15 +273,29 @@
                 },
                 isUpperEgypt: false,
                 
-                // محافظات الصعيد ومطروح والبحر الأحمر والوادي
+                // محافظات الصعيد ومطروح والبحر الأحمر والوادي وسيناء - تحتاج تأكيد العميل
                 upperEgyptGovernorates: [
-                    'الفيوم', 'المنيا', 'أسيوط', 'سوهاج', 'قنا', 'الأقصر', 'أسوان',
-                    'البحر الأحمر', 'مطروح', 'الوادي الجديد', 'شمال سيناء', 'جنوب سيناء'
+                    'الفيوم',
+                    'المنيا', 
+                    'أسيوط',
+                    'سوهاج',
+                    'قنا',
+                    'الأقصر',
+                    'أسوان',
+                    'البحر الأحمر',
+                    'مطروح',
+                    'الوادي الجديد',
+                    'شمال سيناء',
+                    'جنوب سيناء'
                 ],
                 
                 checkUpperEgypt() {
-                    const gov = this.order.governorate;
-                    this.isUpperEgypt = this.upperEgyptGovernorates.includes(gov);
+                    const gov = this.order.governorate ? this.order.governorate.trim() : '';
+                    this.isUpperEgypt = this.upperEgyptGovernorates.some(g => 
+                        g.trim() === gov || 
+                        gov.includes(g.trim()) || 
+                        g.trim().includes(gov)
+                    );
                 },
                 
                 init() {
