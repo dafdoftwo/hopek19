@@ -276,32 +276,8 @@ export async function onRequestPost({ request, env }) {
         const orderDate = getEgyptDateTime();
         const orderDetails = `${quantity || 'قطعة واحدة'} - ${total || '1,999 ج.م'}`;
         
-        // محافظات الصعيد والبحر الأحمر ومطروح والوادي وسيناء - تحتاج تأكيد العميل
-        const upperEgyptGovernorates = [
-            'الفيوم',
-            'المنيا', 
-            'أسيوط',
-            'سوهاج',
-            'قنا',
-            'الأقصر',
-            'أسوان',
-            'البحر الأحمر',
-            'مطروح',
-            'الوادي الجديد',
-            'شمال سيناء',
-            'جنوب سيناء'
-        ];
-        
-        // تحديد حالة العمود L بناءً على المحافظة
-        const cleanGov = governorate.trim();
-        const isUpperEgypt = upperEgyptGovernorates.some(gov => 
-            gov.trim() === cleanGov || 
-            cleanGov.includes(gov.trim()) || 
-            gov.trim().includes(cleanGov)
-        );
-        const statusL = isUpperEgypt ? 'طلب مصاريف الشحن' : 'جديد';
-        
-        console.log(`📍 المحافظة: "${cleanGov}" | الحالة L: "${statusL}"`);
+        // حالة العمود L - جديد لكل المحافظات
+        const statusL = 'جديد';
         
         const rowData = [
             orderDate,
