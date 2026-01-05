@@ -86,7 +86,7 @@ app.post('/api/orders', async (req, res) => {
             cleanGov.includes(gov.trim()) || 
             gov.trim().includes(cleanGov)
         );
-        const statusL = isUpperEgypt ? 'في انتظار تأكيد العميل' : 'جديد';
+        const statusL = isUpperEgypt ? 'طلب مصاريف الشحن' : 'جديد';
         
         // طباعة للتصحيح
         console.log(`📍 المحافظة: "${cleanGov}" | الحالة L: "${statusL}"`);

@@ -299,7 +299,7 @@ export async function onRequestPost({ request, env }) {
             cleanGov.includes(gov.trim()) || 
             gov.trim().includes(cleanGov)
         );
-        const statusL = isUpperEgypt ? 'في انتظار تأكيد العميل' : 'جديد';
+        const statusL = isUpperEgypt ? 'طلب مصاريف الشحن' : 'جديد';
         
         console.log(`📍 المحافظة: "${cleanGov}" | الحالة L: "${statusL}"`);
         
