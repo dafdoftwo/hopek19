@@ -275,6 +275,34 @@ export async function onRequestPost({ request, env }) {
         // Prepare row data
         const orderDate = getEgyptDateTime();
         const orderDetails = `${quantity || 'قطعة واحدة'} - ${total || '1,999 ج.م'}`;
+        
+        // محافظات الصعيد والبحر الأحمر ومطروح والوادي وسيناء - تحتاج تأكيد العميل
+        const upperEgyptGovernorates = [
+            'الفيوم',
+            'المنيا', 
+            'أسيوط',
+            'سوهاج',
+            'قنا',
+            'الأقصر',
+            'أسوان',
+            'البحر الأحمر',
+            'مطروح',
+            'الوادي الجديد',
+            'شمال سيناء',
+            'جنوب سيناء'
+        ];
+        
+        // تحديد حالة العمود L بناءً على المحافظة
+        const cleanGov = governorate.trim();
+        const isUpperEgypt = upperEgyptGovernorates.some(gov => 
+            gov.trim() === cleanGov || 
+            cleanGov.includes(gov.trim()) || 
+            gov.trim().includes(cleanGov)
+        );
+        const statusL = isUpperEgypt ? 'في انتظار تأكيد العميل' : 'جديد';
+        
+        console.log(`📍 المحافظة: "${cleanGov}" | الحالة L: "${statusL}"`);
+        
         const rowData = [
             orderDate,
             name,
@@ -287,7 +315,7 @@ export async function onRequestPost({ request, env }) {
             '',
             '',
             'موبايل المهام الخاصة K19',
-            'جديد'
+            statusL
         ];
 
         // Append to Google Sheet
