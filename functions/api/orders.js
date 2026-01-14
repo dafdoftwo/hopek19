@@ -298,11 +298,8 @@ export async function onRequestPost({ request, env }) {
         await appendToGoogleSheet(env, rowData);
         console.log('✅ تم إضافة طلب جديد:', { name, phone, orderDate });
 
-        // Send Conversion Events
-        await Promise.all([
-            sendTikTokEvent(env, { phone, quantity, total }, 'Lead'),
-            sendFacebookEvent(env, { phone, quantity, total })
-        ]);
+        // Note: Conversion events are tracked client-side on /confirm page
+        // to avoid duplicate tracking
 
         return new Response(JSON.stringify({
             success: true,
