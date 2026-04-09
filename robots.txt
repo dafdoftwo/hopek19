@@ -1,0 +1,49 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /functions/
+Disallow: /server/
+Disallow: /confirm
+Disallow: /.wrangler/
+Disallow: /node_modules/
+
+# Sitemap
+Sitemap: https://hopek19.pages.dev/sitemap.xml
+
+# Crawl-delay (optional, respected by some bots)
+Crawl-delay: 1
+
+# Google
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+Disallow: /confirm
+
+# Google Images
+User-agent: Googlebot-Image
+Allow: /media/
+Allow: /media/optimized/
+
+# Bing
+User-agent: Bingbot
+Allow: /
+Disallow: /api/
+Disallow: /confirm
+
+# Yandex
+User-agent: Yandex
+Allow: /
+Disallow: /api/
+Disallow: /confirm
+
+# DuckDuckGo
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /api/
+Disallow: /confirm
+
+# Baidu
+User-agent: Baiduspider
+Allow: /
+Disallow: /api/
+Disallow: /confirm

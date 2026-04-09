@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  
+  <!-- Main Product Page -->
+  <url>
+    <loc>https://hopek19.pages.dev/</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    
+    <!-- Product Images -->
+    <image:image>
+      <image:loc>https://hopek19.pages.dev/media/613Qs94BNKL._AC_SL1500__11zon.webp</image:loc>
+      <image:title>موبايل Hope K19 الأصلي - هاتف المهام الصعبة</image:title>
+      <image:caption>Hope K19 هاتف المهام الصعبة الأصلي ببطارية 22000mAh ويدعم 4 شرائح SIM</image:caption>
+    </image:image>
+    
+    <image:image>
+      <image:loc>https://hopek19.pages.dev/media/optimized/waterproof.webp</image:loc>
+      <image:title>Hope K19 مقاوم للماء والصدمات</image:title>
+      <image:caption>هيكل مقاوم للماء والصدمات من البلاستيك المقوى والمعدن المقاوم للصدأ</image:caption>
+    </image:image>
+    
+    <image:image>
+      <image:loc>https://hopek19.pages.dev/media/optimized/charging-other-mobile.webp</image:loc>
+      <image:title>Hope K19 باور بانك مدمج</image:title>
+      <image:caption>بطارية 22000mAh مع منفذ USB لشحن الهواتف الأخرى</image:caption>
+    </image:image>
+    
+    <image:image>
+      <image:loc>https://hopek19.pages.dev/media/optimized/displaying-4-different-sim-card.webp</image:loc>
+      <image:title>Hope K19 يدعم 4 شرائح SIM</image:title>
+      <image:caption>تشغيل 4 شرائح اتصال في نفس الوقت - فودافون واتصالات واورنج و WE</image:caption>
+    </image:image>
+    
+    <image:image>
+      <image:loc>https://hopek19.pages.dev/media/optimized/flashlight.webp</image:loc>
+      <image:title>Hope K19 كشاف قوي</image:title>
+      <image:caption>كشاف LED قوي مناسب للمناطق النائية والعمل الليلي</image:caption>
+    </image:image>
+    
+    <image:image>
+      <image:loc>https://hopek19.pages.dev/media/optimized/antina-signal.webp</image:loc>
+      <image:title>Hope K19 هوائي تقوية إشارة</image:title>
+      <image:caption>هوائي خارجي لتقوية الإشارة في المناطق النائية والصحراوية</image:caption>
+    </image:image>
+    
+    <image:image>
+      <image:loc>https://hopek19.pages.dev/media/optimized/hope-k19-in-desert.webp</image:loc>
+      <image:title>Hope K19 في الصحراء</image:title>
+      <image:caption>موبايل Hope K19 مصمم للعمل في أقسى الظروف والمناطق النائية</image:caption>
+    </image:image>
+    
+    <image:image>
+      <image:loc>https://hopek19.pages.dev/media/optimized/official.webp</image:loc>
+      <image:title>Hope K19 المنتج الأصلي الرسمي</image:title>
+      <image:caption>موبايل Hope K19 الأصلي إصدار 2026 من المتجر الرسمي</image:caption>
+    </image:image>
+    
+    <!-- Product Video -->
+    <video:video>
+      <video:thumbnail_loc>https://hopek19.pages.dev/media/optimized/official.webp</video:thumbnail_loc>
+      <video:title>استعراض موبايل Hope K19 - هاتف المهام الصعبة</video:title>
+      <video:description>فيديو توضيحي شامل لجميع مميزات وإمكانيات موبايل Hope K19 الأصلي ببطارية 22000mAh</video:description>
+      <video:content_loc>https://hopek19.pages.dev/media/4dbozw-compressed.mp4</video:content_loc>
+    </video:video>
+    
+  </url>
+
+</urlset>
