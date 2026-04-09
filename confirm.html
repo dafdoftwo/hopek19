@@ -202,6 +202,96 @@
         .copy-btn:active {
             transform: scale(0.95);
         }
+
+        /* ===== Enhanced Quiz Banner ===== */
+        .quiz-banner {
+            position: relative;
+            background: linear-gradient(135deg, #0c1f2e 0%, #132f1e 50%, #1a2a0f 100%);
+            border-radius: 1.25rem;
+            overflow: hidden;
+        }
+        .quiz-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 1.25rem;
+            padding: 2px;
+            background: linear-gradient(135deg, #10b981, #f59e0b, #10b981, #f59e0b);
+            background-size: 300% 300%;
+            animation: borderRotate 4s ease infinite;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+        @keyframes borderRotate {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .quiz-banner::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(16, 185, 129, 0.06), transparent, rgba(245, 158, 11, 0.04), transparent);
+            animation: rotateBg 8s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes rotateBg {
+            to { transform: rotate(360deg); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-8px) rotate(5deg); }
+            66% { transform: translateY(4px) rotate(-3deg); }
+        }
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1) rotate(180deg); }
+        }
+        @keyframes textShimmer {
+            0% { background-position: -100% center; }
+            100% { background-position: 200% center; }
+        }
+        .shimmer-text {
+            background: linear-gradient(90deg, #fff 0%, #fff 40%, #fbbf24 50%, #fff 60%, #fff 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textShimmer 3s linear infinite;
+        }
+        .gift-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        .sparkle-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .banner-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .banner-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: btnSweep 2.5s ease-in-out infinite;
+        }
+        @keyframes btnSweep {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: 100%; }
+        }
     </style>
 </head>
 <body class="min-h-screen" x-data="confirmPage()">
@@ -235,28 +325,64 @@
                  x-transition:enter="transition ease-out duration-500"
                  x-transition:enter-start="opacity-0 translate-y-4"
                  x-transition:enter-end="opacity-1 translate-y-0"
-                 class="relative overflow-hidden rounded-2xl p-5 mb-4 cursor-pointer group"
-                 style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(245, 158, 11, 0.12)); border: 1px solid rgba(16, 185, 129, 0.35);"
+                 class="quiz-banner p-5 md:p-6 mb-4 cursor-pointer group"
                  @click="startQuiz()">
                 
-                <div class="absolute top-0 left-0 w-full h-full opacity-20">
-                    <div class="absolute top-2 left-4 text-3xl animate-bounce" style="animation-delay: 0.1s">🎁</div>
-                    <div class="absolute bottom-3 right-8 text-2xl animate-bounce" style="animation-delay: 0.5s">🏆</div>
-                </div>
+                <!-- Floating sparkle particles -->
+                <div class="sparkle-particle bg-emerald-400" style="top: 15%; right: 12%; animation: sparkle 2.5s ease-in-out infinite;"></div>
+                <div class="sparkle-particle bg-amber-400" style="top: 60%; right: 25%; animation: sparkle 3s ease-in-out infinite 0.8s;"></div>
+                <div class="sparkle-particle bg-emerald-300" style="top: 30%; left: 15%; animation: sparkle 2.8s ease-in-out infinite 1.5s;"></div>
+                <div class="sparkle-particle bg-amber-300" style="top: 75%; left: 30%; animation: sparkle 3.2s ease-in-out infinite 0.4s;"></div>
+                <div class="sparkle-particle bg-white" style="top: 45%; right: 40%; animation: sparkle 2s ease-in-out infinite 1.2s;"></div>
+                <div class="sparkle-particle bg-emerald-400" style="top: 85%; left: 50%; animation: sparkle 2.6s ease-in-out infinite 2s;"></div>
                 
-                <div class="relative text-center">
-                    <div class="inline-flex items-center gap-2 bg-amber-500/20 text-amber-300 text-xs font-bold px-3 py-1 rounded-full mb-3">
-                        <span class="relative flex h-2 w-2">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-400"></span>
-                        </span>
-                        عرض حصري لك
+                <div class="relative z-10">
+                    <!-- Gift Icon -->
+                    <div class="flex justify-center mb-3">
+                        <div class="gift-float w-16 h-16 bg-gradient-to-br from-amber-400 via-amber-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg shadow-amber-500/30 rotate-[-5deg] group-hover:rotate-[5deg] transition-transform duration-500">
+                            <span class="text-3xl">🎁</span>
+                        </div>
                     </div>
-                    <h3 class="text-white font-bold text-lg mb-2">🎉 أنت مرشح للفوز بخصم ١٠٪</h3>
-                    <p class="text-gray-300 text-sm mb-4">على منتجات شركة Anker العالمية الأصلية</p>
-                    <button class="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 group-hover:shadow-lg group-hover:shadow-emerald-500/25 text-sm">
-                        ابدأ الآن واكتشف فرصتك ←
+
+                    <!-- Badge -->
+                    <div class="flex justify-center mb-3">
+                        <div class="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/25 to-emerald-500/25 text-amber-300 text-xs font-bold px-4 py-1.5 rounded-full border border-amber-500/30">
+                            <span class="relative flex h-2 w-2">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-400"></span>
+                            </span>
+                            🔥 عرض حصري لعملاء Hope K19
+                        </div>
+                    </div>
+                    
+                    <!-- Headline -->
+                    <h3 class="shimmer-text font-extrabold text-xl md:text-2xl mb-2 text-center leading-tight">
+                        أنت مرشح للفوز بخصم ١٠٪
+                    </h3>
+                    <p class="text-emerald-300/80 text-sm mb-1 text-center font-medium">على منتجات شركة <span class="text-white font-bold">Anker</span> العالمية الأصلية</p>
+                    <p class="text-gray-500 text-xs mb-4 text-center">من خلال ضمان كايرو فولت الرسمي</p>
+                    
+                    <!-- Urgency -->
+                    <div class="flex items-center justify-center gap-2 mb-4">
+                        <div class="flex items-center gap-1 bg-red-500/15 text-red-400 text-xs font-bold px-3 py-1.5 rounded-lg border border-red-500/20">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            العرض لفترة محدودة
+                        </div>
+                    </div>
+
+                    <!-- CTA Button -->
+                    <button class="banner-btn w-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-teal-500 hover:from-emerald-600 hover:via-emerald-500 hover:to-teal-600 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 shadow-xl shadow-emerald-500/20 group-hover:shadow-emerald-500/40 group-hover:scale-[1.02] text-base">
+                        <span class="flex items-center justify-center gap-2">
+                            <span>🎯 ابدأ الآن واكتشف فرصتك</span>
+                            <svg class="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                        </span>
                     </button>
+                    
+                    <!-- Social proof -->
+                    <p class="text-gray-500 text-[10px] text-center mt-3 flex items-center justify-center gap-1">
+                        <svg class="w-3 h-3 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                        +320 عميل حصلوا على الخصم هذا الشهر
+                    </p>
                 </div>
             </div>
 
