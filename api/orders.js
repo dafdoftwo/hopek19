@@ -258,11 +258,8 @@ const handler = async (event, context) => {
 
             console.log('✅ تم إضافة طلب جديد:', { name, phone, orderDate });
 
-            // Send Conversion Events (TikTok Lead & Facebook Lead)
-            await Promise.all([
-                sendTikTokEvent({ phone, quantity, total }, 'Lead'),
-                sendFacebookEvent({ phone, quantity, total })
-            ]);
+            // Note: Conversion events are tracked client-side on /confirm page
+            // to avoid duplicate tracking (TikTok SubmitForm + Facebook Lead)
 
             return {
                 statusCode: 200,
