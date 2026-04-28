@@ -290,7 +290,7 @@ export async function onRequestPost({ request, env }) {
             orderDetails,
             '',
             '',
-            'موبايل المهام الخاصة K19',
+            'موبايل hope k19 + نظاره ستيم بانك الاصلية',
             statusL
         ];
 
