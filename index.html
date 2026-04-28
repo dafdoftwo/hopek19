@@ -614,6 +614,120 @@
             transform: translateX(0);
             opacity: 1;
         }
+
+        /* ===== Countdown Timer Banner ===== */
+        .countdown-banner {
+            background: linear-gradient(135deg, #1a0a00 0%, #2d1600 50%, #1a0a00 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .countdown-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.08), transparent);
+            background-size: 200% 100%;
+            animation: shimmerBanner 3s infinite;
+        }
+        @keyframes shimmerBanner {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        .countdown-digit {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            backdrop-filter: blur(10px);
+            min-width: 52px;
+            padding: 6px 10px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .countdown-digit .number {
+            font-family: 'Courier New', monospace;
+            font-size: 1.5rem;
+            font-weight: 900;
+            line-height: 1;
+            color: #fff;
+        }
+        .countdown-digit .label {
+            font-size: 0.6rem;
+            color: rgba(245, 158, 11, 0.8);
+            margin-top: 2px;
+        }
+        .countdown-separator {
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: #F59E0B;
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        .countdown-urgent .countdown-digit {
+            border-color: rgba(220, 38, 38, 0.6);
+            animation: urgentPulse 1s ease-in-out infinite;
+        }
+        .countdown-urgent .countdown-digit .number {
+            color: #FCA5A5;
+        }
+        .countdown-urgent .countdown-separator {
+            color: #EF4444;
+        }
+        @keyframes urgentPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+            50% { box-shadow: 0 0 15px 5px rgba(220, 38, 38, 0.2); }
+        }
+
+        /* ===== Sunglasses Gift Section ===== */
+        .gift-section {
+            background: linear-gradient(135deg, #0a0f1a 0%, #111827 50%, #0a0f1a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .gift-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(245, 158, 11, 0.03), transparent, rgba(234, 88, 12, 0.02), transparent);
+            animation: rotateGiftBg 15s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes rotateGiftBg {
+            to { transform: rotate(360deg); }
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(245, 158, 11, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 1.5rem;
+        }
+        .sunglasses-img {
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .sunglasses-img:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+        .gift-badge {
+            background: linear-gradient(135deg, #F59E0B, #EA580C);
+            color: white;
+            font-weight: 800;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+        .feature-pill {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            color: #FBBF24;
+            padding: 6px 14px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
     </style>
 </head>
 
@@ -649,6 +763,51 @@
 
     <!-- Spacer for fixed header -->
     <div class="h-14 md:h-16"></div>
+
+    <!-- 🔥 48-Hour Countdown Banner -->
+    <div x-show="!offerExpired" class="countdown-banner py-3 md:py-4 sticky top-14 md:top-16 z-40" :class="isUrgent ? 'countdown-urgent' : ''">
+        <div class="max-w-7xl mx-auto px-4 relative z-10">
+            <div class="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6">
+                <!-- Offer Text -->
+                <div class="flex items-center gap-2 text-center">
+                    <span class="text-lg md:text-xl">🔥</span>
+                    <p class="text-white font-bold text-sm md:text-base">
+                        <span x-show="!isUrgent">عرض خاص لمدة محدودة — النظارة هدية مجانية!</span>
+                        <span x-show="isUrgent" class="text-red-300">⚠️ العرض ينتهي قريباً جداً!</span>
+                    </p>
+                </div>
+                <!-- Countdown Digits -->
+                <div class="flex items-center gap-1.5 md:gap-2" dir="ltr">
+                    <div class="countdown-digit">
+                        <div class="number" x-text="String(countdown.hours).padStart(2, '0')">00</div>
+                        <div class="label">ساعة</div>
+                    </div>
+                    <span class="countdown-separator">:</span>
+                    <div class="countdown-digit">
+                        <div class="number" x-text="String(countdown.minutes).padStart(2, '0')">00</div>
+                        <div class="label">دقيقة</div>
+                    </div>
+                    <span class="countdown-separator">:</span>
+                    <div class="countdown-digit">
+                        <div class="number" x-text="String(countdown.seconds).padStart(2, '0')">00</div>
+                        <div class="label">ثانية</div>
+                    </div>
+                </div>
+                <!-- Live Viewers -->
+                <div class="hidden md:flex items-center gap-1.5 bg-white/10 px-3 py-1.5 rounded-full">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-green-400"></span>
+                    </span>
+                    <span class="text-green-300 text-xs font-medium" x-text="liveViewers + ' يشاهدون الآن'">23 يشاهدون الآن</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Expired Banner -->
+    <div x-show="offerExpired" class="bg-gray-800 py-3 text-center sticky top-14 md:top-16 z-40">
+        <p class="text-gray-400 font-bold text-sm">❌ انتهى العرض — النظارة لم تعد متاحة كهدية</p>
+    </div>
 
     <!-- Hero Section -->
     <section class="bg-white">
@@ -707,19 +866,18 @@
                     <!-- Product Title -->
                     <div>
                         <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="bg-red-100 text-red-600 text-xs font-bold px-3 py-1 rounded-full animate-pulse">🔥 عرض 48 ساعة</span>
                             <span
                                 class="bg-brand-navy/10 text-brand-navy text-xs font-bold px-3 py-1 rounded-full">بطارية
                                 22,000mAh</span>
                             <span class="bg-amber-100 text-amber-700 text-xs font-bold px-3 py-1 rounded-full">4 شرائح
                                 SIM</span>
-                            <span class="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">هاتف
-                                الصحراء</span>
+                            <span class="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">+ نظارة هدية 🎁</span>
                         </div>
                         <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal leading-tight">
-                            Hope K19 - هاتف المهام الصعبة
+                            Hope K19 + نظارة Steampunk الأصلية
                         </h1>
-                        <p class="text-gray-500 mt-2 text-base md:text-lg">أقوى هاتف للعمليات الشاقة والمناطق النائية -
-                            إصدار ٢٠٢٦</p>
+                        <p class="text-gray-500 mt-2 text-base md:text-lg">هاتف المهام الصعبة + نظارة التحكم في التعتيم — عرض حصري لمدة محدودة</p>
                     </div>
 
                     <!-- Rating -->
@@ -736,14 +894,19 @@
                     </div>
 
                     <!-- Price Box -->
-                    <div class="bg-soft-gray rounded-xl p-5 border border-border-gray mb-4">
+                    <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl p-5 border border-amber-200 mb-4">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">🎁 النظارة هدية مجانية</span>
+                            <span class="bg-red-100 text-red-600 text-xs font-bold px-2 py-1 rounded">وفر 750 ج.م</span>
+                        </div>
                         <div class="flex items-baseline gap-3">
                             <span class="text-3xl md:text-4xl font-bold text-brand-navy">1,999 ج.م</span>
-                            <span class="text-xl text-gray-400 line-through">2,200 ج.م</span>
-                            <span class="bg-red-100 text-red-600 text-sm font-medium px-2 py-1 rounded">وفر 201
-                                ج.م</span>
+                            <span class="text-xl text-gray-400 line-through">2,749 ج.م</span>
                         </div>
-                        <p class="text-sm text-gray-500 mt-2">شامل ضريبة القيمة المضافة</p>
+                        <p class="text-xs text-gray-500 mt-2 flex items-center gap-1">
+                            <svg class="w-3.5 h-3.5 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+                            العرض ينتهي خلال <span class="font-bold text-red-500 mr-1" x-text="String(countdown.hours).padStart(2,'0') + ':' + String(countdown.minutes).padStart(2,'0') + ':' + String(countdown.seconds).padStart(2,'0')">48:00:00</span>
+                        </p>
                     </div>
 
                     <!-- Trust Badges -->
@@ -770,23 +933,32 @@
 
                     <!-- Bundle Selector -->
                     <div class="space-y-3">
-                        <h3 class="font-semibold text-charcoal">اختر الكمية:</h3>
+                        <h3 class="font-semibold text-charcoal">اختر العرض:</h3>
 
-                        <!-- Option 1: Single Piece -->
+                        <!-- Option 1: K19 + Sunglasses -->
                         <label
-                            class="bundle-option flex items-center justify-between p-4 rounded-xl border-2 cursor-pointer transition-all"
+                            class="bundle-option relative flex items-center justify-between p-4 rounded-xl border-2 cursor-pointer transition-all"
                             :class="selectedBundle === 1 ? 'border-brand-navy bg-blue-50/50' : 'border-border-gray hover:border-gray-300'">
+                            <!-- Recommended Badge -->
+                            <div
+                                class="absolute -top-3 right-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow">
+                                ⭐ العرض الموصى به
+                            </div>
                             <div class="flex items-center gap-3">
                                 <input type="radio" name="bundle" value="1" x-model="selectedBundle"
                                     class="w-5 h-5 text-brand-navy focus:ring-brand-navy">
                                 <div>
-                                    <span class="font-medium text-charcoal">قطعة واحدة</span>
+                                    <span class="font-medium text-charcoal">K19 + نظارة Steampunk</span>
+                                    <p class="text-xs text-green-600 font-bold">🎁 النظارة مجاناً (قيمتها 750 ج.م)</p>
                                 </div>
                             </div>
-                            <span class="font-bold text-charcoal text-lg">1,999 ج.م</span>
+                            <div class="text-left">
+                                <span class="font-bold text-charcoal text-lg">1,999 ج.م</span>
+                                <p class="text-xs text-gray-400 line-through">2,749 ج.م</p>
+                            </div>
                         </label>
 
-                        <!-- Option 2: Bundle (Best Value) -->
+                        <!-- Option 2: 2x K19 + 2x Sunglasses -->
                         <label
                             class="bundle-option relative flex items-center justify-between p-4 rounded-xl border-2 cursor-pointer transition-all"
                             :class="selectedBundle === 2 ? 'border-brand-navy bg-blue-50/50' : 'border-border-gray hover:border-gray-300'">
@@ -795,18 +967,17 @@
                                 class="absolute -top-3 right-4 bg-brand-green text-white text-xs font-bold px-3 py-1 rounded-full">
                                 الأكثر توفيراً
                             </div>
-
                             <div class="flex items-center gap-3">
                                 <input type="radio" name="bundle" value="2" x-model="selectedBundle"
                                     class="w-5 h-5 text-brand-navy focus:ring-brand-navy">
                                 <div>
-                                    <span class="font-medium text-charcoal">عرض قطعتين</span>
-                                    <p class="text-sm text-green-600 font-medium">وفر 248 ج.م</p>
+                                    <span class="font-medium text-charcoal">2 × K19 + 2 نظارة</span>
+                                    <p class="text-xs text-green-600 font-bold">🎁 نظارتين مجاناً + وفر 248 ج.م</p>
                                 </div>
                             </div>
                             <div class="text-left">
                                 <span class="font-bold text-charcoal text-lg">3,750 ج.م</span>
-                                <p class="text-xs text-gray-400 line-through">3,998 ج.م</p>
+                                <p class="text-xs text-gray-400 line-through">5,498 ج.م</p>
                             </div>
                         </label>
                     </div>
@@ -884,8 +1055,76 @@
             </div>
         </div>
     </section>
+    <!-- 🎁 Sunglasses Gift Section -->
+    <section class="gift-section py-12 md:py-16" x-show="!offerExpired">
+        <div class="max-w-5xl mx-auto px-4 relative z-10">
+            <!-- Section Header -->
+            <div class="text-center mb-10">
+                <span class="gift-badge inline-block mb-4">🎁 هديتك المجانية مع العرض</span>
+                <h2 class="text-2xl md:text-3xl font-bold text-white">نظارة Steampunk الأصلية</h2>
+                <p class="text-gray-400 mt-2">نظارة التحكم في نسبة التعتيم — قيمتها <span class="text-amber-400 font-bold">750 ج.م</span> مجاناً</p>
+            </div>
 
+            <!-- Glass Card with Images -->
+            <div class="glass-card p-6 md:p-10">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-center">
+                    <!-- Sunglasses Images -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-black/30 rounded-xl p-4 flex items-center justify-center overflow-hidden">
+                            <img src="media/luxury-round-sunglasses-with-steampunk-style-design_1.webp" 
+                                 alt="نظارة Steampunk الأصلية - منظر أمامي" 
+                                 class="sunglasses-img w-full h-auto max-h-48 object-contain" loading="lazy">
+                        </div>
+                        <div class="bg-black/30 rounded-xl p-4 flex items-center justify-center overflow-hidden">
+                            <img src="media/round-steampunk-sunglasses-with-ornate-design_1.webp" 
+                                 alt="نظارة Steampunk الأصلية - تصميم مزخرف" 
+                                 class="sunglasses-img w-full h-auto max-h-48 object-contain" loading="lazy">
+                        </div>
+                    </div>
 
+                    <!-- Sunglasses Info -->
+                    <div class="space-y-5">
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="text-amber-400 text-2xl">🕶️</span>
+                                <h3 class="text-xl font-bold text-white">Steampunk Original</h3>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed">نظارة أصلية بتصميم كلاسيكي فاخر مع خاصية التحكم الكامل في نسبة التعتيم — مثالية للقيادة والاستخدام اليومي</p>
+                        </div>
+
+                        <!-- Features -->
+                        <div class="flex flex-wrap gap-2">
+                            <span class="feature-pill">🔄 تحكم في التعتيم</span>
+                            <span class="feature-pill">🛡️ إطار معدني متين</span>
+                            <span class="feature-pill">📦 علبة جلدية فاخرة</span>
+                            <span class="feature-pill">✅ حماية UV400</span>
+                        </div>
+
+                        <!-- Price Highlight -->
+                        <div class="bg-black/30 rounded-xl p-4 flex items-center justify-between">
+                            <div>
+                                <p class="text-xs text-gray-400">قيمة النظارة</p>
+                                <div class="flex items-baseline gap-2">
+                                    <span class="text-lg font-bold text-gray-400 line-through">750 ج.م</span>
+                                    <span class="text-2xl font-bold text-green-400">مجاناً</span>
+                                </div>
+                            </div>
+                            <div class="text-left">
+                                <p class="text-xs text-gray-400">العرض ينتهي خلال</p>
+                                <p class="text-amber-400 font-bold font-mono" dir="ltr" x-text="String(countdown.hours).padStart(2,'0') + ':' + String(countdown.minutes).padStart(2,'0') + ':' + String(countdown.seconds).padStart(2,'0')">48:00:00</p>
+                            </div>
+                        </div>
+
+                        <!-- CTA -->
+                        <button @click="document.getElementById('order-section').scrollIntoView({behavior: 'smooth'})" 
+                                class="w-full py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold rounded-xl hover:from-amber-600 hover:to-orange-600 transition-all shadow-lg shadow-amber-500/20 text-base">
+                            اطلب الآن واحصل على النظارة هدية 🎁
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Media Showcase Gallery -->
     <section class="py-12 md:py-16 bg-white">
@@ -1808,14 +2047,15 @@
     </section>
 
     <!-- Final CTA Section -->
-    <section class="py-12 md:py-16 bg-brand-navy text-white">
+    <section class="py-12 md:py-16 bg-brand-navy text-white" x-show="!offerExpired">
         <div class="max-w-3xl mx-auto px-4 text-center">
-            <h2 class="text-2xl md:text-3xl font-bold mb-4">لا تفوت العرض - اطلب الآن!</h2>
-            <p class="text-white/80 mb-8">احصل على Hope-K19 الأصلي مع ضمان ٣ سنوات وشحن لجميع المحافظات</p>
+            <h2 class="text-2xl md:text-3xl font-bold mb-4">🔥 العرض ينتهي قريباً — لا تفوّت الفرصة!</h2>
+            <p class="text-white/80 mb-3">اطلب Hope K19 الآن واحصل على نظارة Steampunk الأصلية هدية مجانية (قيمتها 750 ج.م)</p>
+            <p class="text-amber-400 font-bold mb-8 text-lg" x-text="'⏰ باقي ' + String(countdown.hours).padStart(2,'0') + ':' + String(countdown.minutes).padStart(2,'0') + ':' + String(countdown.seconds).padStart(2,'0') + ' على انتهاء العرض'">⏰ باقي 48:00:00 على انتهاء العرض</p>
             <button
                 @click="openOrderForm(); setTimeout(() => { document.querySelector('form').scrollIntoView({behavior: 'smooth', block: 'start'}) }, 50)"
                 class="bg-white text-brand-navy hover:bg-gray-100 text-lg font-bold py-4 px-10 rounded-xl shadow-lg transition-all duration-300">
-                اطلب الآن - الدفع عند الاستلام
+                اطلب الآن + نظارة هدية 🎁 — الدفع عند الاستلام
             </button>
         </div>
     </section>
@@ -1871,7 +2111,7 @@
             <button
                 @click="openOrderForm(); setTimeout(() => { document.querySelector('form').scrollIntoView({behavior: 'smooth', block: 'start'}) }, 50)"
                 class="flex-1 bg-brand-navy hover:bg-brand-navy-dark text-white font-bold py-3 px-4 rounded-lg transition-colors">
-                اطلب الآن بخصم 30%
+                اطلب الآن + نظارة هدية 🎁
             </button>
         </div>
     </div>
@@ -1934,8 +2174,8 @@
                         </div>
                         <div class="flex-1">
                             <p class="text-amber-800 font-bold"
-                                x-text="selectedBundle == 1 ? 'Hope K19 - قطعة واحدة' : 'Hope K19 - عرض قطعتين'"></p>
-                            <p class="text-amber-600 text-sm">هاتف المهام الصعبة</p>
+                                x-text="selectedBundle == 1 ? 'K19 + نظارة Steampunk' : '2×K19 + 2 نظارة Steampunk'"></p>
+                            <p class="text-amber-600 text-sm">🎁 النظارة هدية مجانية</p>
                         </div>
                         <div class="text-left">
                             <p class="text-2xl font-black text-amber-600"
@@ -2124,7 +2364,7 @@
                     d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
                 </path>
             </svg>
-            اطلب الآن بخصم 30% - <span x-text="selectedBundle == 1 ? '1,999 ج.م' : '3,750 ج.م'"></span>
+            اطلب الآن + نظارة هدية 🎁 - <span x-text="selectedBundle == 1 ? '1,999 ج.م' : '3,750 ج.م'"></span>
         </button>
     </div>
 
@@ -2153,6 +2393,63 @@
                     address: ''
                 },
 
+                // Countdown Timer State
+                countdown: { hours: 48, minutes: 0, seconds: 0 },
+                isUrgent: false,
+                offerExpired: false,
+                liveViewers: 23,
+                countdownInterval: null,
+
+                init() {
+                    this.initCountdown();
+                    this.initLiveViewers();
+                },
+
+                initCountdown() {
+                    const storageKey = 'hopek19_offer_deadline';
+                    let deadline = localStorage.getItem(storageKey);
+                    if (!deadline) {
+                        deadline = Date.now() + (48 * 60 * 60 * 1000); // 48 hours from now
+                        localStorage.setItem(storageKey, deadline.toString());
+                    } else {
+                        deadline = parseInt(deadline);
+                    }
+
+                    const updateCountdown = () => {
+                        const now = Date.now();
+                        const remaining = deadline - now;
+
+                        if (remaining <= 0) {
+                            this.countdown = { hours: 0, minutes: 0, seconds: 0 };
+                            this.offerExpired = true;
+                            this.isUrgent = false;
+                            if (this.countdownInterval) clearInterval(this.countdownInterval);
+                            return;
+                        }
+
+                        const totalSeconds = Math.floor(remaining / 1000);
+                        this.countdown = {
+                            hours: Math.floor(totalSeconds / 3600),
+                            minutes: Math.floor((totalSeconds % 3600) / 60),
+                            seconds: totalSeconds % 60
+                        };
+
+                        // Urgent mode: last 1 hour
+                        this.isUrgent = remaining <= (60 * 60 * 1000);
+                    };
+
+                    updateCountdown();
+                    this.countdownInterval = setInterval(updateCountdown, 1000);
+                },
+
+                initLiveViewers() {
+                    // Simulate live viewer count between 15-35
+                    setInterval(() => {
+                        const change = Math.random() > 0.5 ? 1 : -1;
+                        this.liveViewers = Math.max(15, Math.min(35, this.liveViewers + change));
+                    }, 5000);
+                },
+
                 convertToEnglishNumbers(str) {
                     const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
                     const englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
@@ -2166,7 +2463,9 @@
                     'media/613Qs94BNKL._AC_SL1500__11zon.webp',
                     'media/optimized/495378672-122163648458382936-5354201003752853940-n.webp',
                     'media/optimized/51ft-jipkal-ac-.webp',
-                    'media/optimized/51hm6ss8z9l-ac-sl1200-.webp'
+                    'media/optimized/51hm6ss8z9l-ac-sl1200-.webp',
+                    'media/luxury-round-sunglasses-with-steampunk-style-design_1.webp',
+                    'media/round-steampunk-sunglasses-with-ornate-design_1.webp'
                 ],
 
                 scrollToOrder() {
@@ -2202,8 +2501,8 @@
                         whatsapp: this.orderForm.whatsapp,
                         governorate: this.orderForm.governorate,
                         address: this.orderForm.address,
-                        product: 'موبايل المهام الخاصة K19',
-                        quantity: this.selectedBundle == 1 ? 'قطعة واحدة' : 'قطعتين',
+                        product: 'موبايل hope k19 + نظاره ستيم بانك الاصلية',
+                        quantity: this.selectedBundle == 1 ? 'K19 + نظارة Steampunk' : '2×K19 + 2 نظارة Steampunk',
                         total: this.selectedBundle == 1 ? '1,999 ج.م' : '3,750 ج.م'
                     };
 
@@ -2231,8 +2530,9 @@
                         whatsapp: this.confirmedOrder.whatsapp,
                         governorate: this.confirmedOrder.governorate,
                         address: this.confirmedOrder.address,
-                        quantity: this.confirmedOrder.bundle == 1 ? 'قطعة واحدة' : 'قطعتين',
-                        total: this.confirmedOrder.bundle == 1 ? '1,999 ج.م' : '3,750 ج.م'
+                        quantity: this.confirmedOrder.bundle == 1 ? 'K19 + نظارة Steampunk' : '2×K19 + 2 نظارة Steampunk',
+                        total: this.confirmedOrder.bundle == 1 ? '1,999 ج.م' : '3,750 ج.م',
+                        product: 'موبايل hope k19 + نظاره ستيم بانك الاصلية'
                     };
                     localStorage.setItem('confirmedOrder', JSON.stringify(confirmData));
 
