@@ -815,12 +815,12 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
 
                 <!-- Image Carousel - Mobile First (Top) -->
-                <div class="relative" x-data="{ currentSlide: 0, totalSlides: 4 }">
+                <div class="relative" x-data="{ currentSlide: 0, totalSlides: 7 }">
                     <!-- Main Image -->
                     <div class="relative aspect-square bg-soft-gray rounded-2xl overflow-hidden shadow-lg">
                         <!-- First image - eager load for LCP -->
-                        <img src="media/613Qs94BNKL._AC_SL1500__11zon.webp" alt="Hope-K19 Product Image 1"
-                            class="absolute inset-0 w-full h-full object-contain slider-image mix-blend-multiply"
+                        <img src="media/offers.png" alt="عرض Hope K19 + نظارة Steampunk الأصلية"
+                            class="absolute inset-0 w-full h-full object-contain slider-image"
                             :class="{ 'opacity-100': currentSlide === 0, 'opacity-0': currentSlide !== 0 }"
                             fetchpriority="high" decoding="async">
                         <!-- Other images - lazy load -->
