@@ -37,10 +37,25 @@
       var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
       ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
 
-      ttq.load('D56KUNJC77U7I264VFPG');
+      ttq.load('D56KUNJC77U7I264VFPG', { auto_config: false });
       ttq.page();
-      // Conversion tracking handled by TikTok Event Builder (Purchase)
-      // Removed SubmitForm to avoid duplicate lead counting
+      // Fire SubmitForm ONLY when valid order data exists AND not already tracked
+      var orderData = localStorage.getItem('confirmedOrder');
+      var alreadyTracked = sessionStorage.getItem('ttq_tracked');
+      if (orderData && !alreadyTracked) {
+        try {
+          var order = JSON.parse(orderData);
+          if (order.name && order.phone) {
+            ttq.track('SubmitForm', {
+              content_name: order.product || 'Hope K19',
+              content_type: 'product',
+              value: parseFloat((order.total || '1999').replace(/[^0-9.]/g, '')),
+              currency: 'EGP'
+            });
+            sessionStorage.setItem('ttq_tracked', '1');
+          }
+        } catch(e) {}
+      }
     }(window, document, 'ttq');
     </script>
     <!-- TikTok Pixel Code End -->
