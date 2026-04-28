@@ -734,7 +734,7 @@
 <body class="bg-white text-charcoal font-tajawal" x-data="shopApp()">
 
     <!-- Sticky Header -->
-    <header class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-sm z-50 border-b border-border-gray">
+    <header class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-sm z-50 border-b border-border-gray hidden md:block">
         <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
             <a href="#" class="flex items-center gap-2 group">
                 <div class="relative w-9 h-9 md:w-10 md:h-10">
@@ -762,10 +762,10 @@
     </header>
 
     <!-- Spacer for fixed header -->
-    <div class="h-14 md:h-16"></div>
+    <div class="h-0 md:h-16"></div>
 
     <!-- 🔥 48-Hour Countdown Banner -->
-    <div x-show="!offerExpired" class="countdown-banner py-3 md:py-4 sticky top-14 md:top-16 z-40" :class="isUrgent ? 'countdown-urgent' : ''">
+    <div x-show="!offerExpired" class="countdown-banner py-3 md:py-4 sticky top-0 md:top-16 z-40" :class="isUrgent ? 'countdown-urgent' : ''">
         <div class="max-w-7xl mx-auto px-4 relative z-10">
             <div class="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6">
                 <!-- Offer Text -->
@@ -794,7 +794,7 @@
                     </div>
                 </div>
                 <!-- Live Viewers -->
-                <div class="hidden md:flex items-center gap-1.5 bg-white/10 px-3 py-1.5 rounded-full">
+                <div class="flex items-center gap-1.5 bg-white/10 px-3 py-1.5 rounded-full">
                     <span class="relative flex h-2 w-2">
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-2 w-2 bg-green-400"></span>
@@ -805,7 +805,7 @@
         </div>
     </div>
     <!-- Expired Banner -->
-    <div x-show="offerExpired" class="bg-gray-800 py-3 text-center sticky top-14 md:top-16 z-40">
+    <div x-show="offerExpired" class="bg-gray-800 py-3 text-center sticky top-0 md:top-16 z-40">
         <p class="text-gray-400 font-bold text-sm">❌ انتهى العرض — النظارة لم تعد متاحة كهدية</p>
     </div>
 
@@ -2443,11 +2443,28 @@
                 },
 
                 initLiveViewers() {
-                    // Simulate live viewer count between 15-35
-                    setInterval(() => {
-                        const change = Math.random() > 0.5 ? 1 : -1;
-                        this.liveViewers = Math.max(15, Math.min(35, this.liveViewers + change));
-                    }, 5000);
+                    // Smart live viewer simulation — realistic traffic patterns
+                    const tick = () => {
+                        const hour = new Date().getHours();
+                        // Peak hours (10am-11pm) have higher base, off-peak lower
+                        const isPeak = hour >= 10 && hour <= 23;
+                        const baseMin = isPeak ? 18 : 10;
+                        const baseMax = isPeak ? 38 : 22;
+
+                        // Weighted random: 60% chance +1, 30% chance -1, 10% chance ±2
+                        const roll = Math.random();
+                        let change;
+                        if (roll < 0.1) change = Math.random() > 0.5 ? 2 : -2;
+                        else if (roll < 0.4) change = -1;
+                        else change = 1;
+
+                        this.liveViewers = Math.max(baseMin, Math.min(baseMax, this.liveViewers + change));
+
+                        // Variable interval: 3-8 seconds for natural feel
+                        const nextTick = 3000 + Math.floor(Math.random() * 5000);
+                        setTimeout(tick, nextTick);
+                    };
+                    setTimeout(tick, 4000);
                 },
 
                 convertToEnglishNumbers(str) {
