@@ -38,7 +38,7 @@ async function sendTikTokEvent(env, eventData, eventType = 'Lead') {
                 content_category: 'Mobile Phone',
                 currency: 'EGP',
                 value: parseFloat(eventData.total?.replace(/[^0-9.]/g, '')) || 1699,
-                num_items: eventData.quantity || 1
+                num_items: eventData.quantity === 'قطعتين' ? 2 : 1
             },
             page: {
                 url: 'https://hopek19.pages.dev/'
@@ -92,7 +92,7 @@ async function sendFacebookEvent(env, eventData) {
                 content_type: 'product',
                 contents: [{
                     id: 'hope-k19',
-                    quantity: eventData.quantity || 1
+                    quantity: eventData.quantity === 'قطعتين' ? 2 : 1
                 }]
             }
         }]

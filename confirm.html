@@ -8,6 +8,21 @@
     
     <!-- Meta Pixel Code -->
     <script>
+    // Read order data from localStorage
+    var orderData = localStorage.getItem('confirmedOrder');
+    var orderValue = 1699.00;
+    if (orderData) {
+        try {
+            var orderObj = JSON.parse(orderData);
+            if (orderObj && orderObj.total) {
+                var numericTotal = parseFloat(orderObj.total.replace(/[^0-9.]/g, ''));
+                if (!isNaN(numericTotal) && numericTotal > 0) {
+                    orderValue = numericTotal;
+                }
+            }
+        } catch (e) {}
+    }
+
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -21,7 +36,7 @@
     fbq('track', 'Lead', {
         content_name: 'Hope K19',
         content_category: 'Mobile Phone',
-        value: 1699.00,
+        value: orderValue,
         currency: 'EGP'
     });
     </script>
@@ -46,10 +61,17 @@
         try {
           var order = JSON.parse(orderData);
           if (order.name && order.phone) {
+            var ttValue = 1699;
+            if (order.total) {
+                var numericTotal = parseFloat(order.total.replace(/[^0-9.]/g, ''));
+                if (!isNaN(numericTotal) && numericTotal > 0) {
+                    ttValue = numericTotal;
+                }
+            }
             ttq.track('SubmitForm', {
               content_name: 'Hope K19',
               content_type: 'product',
-              value: 1699,
+              value: ttValue,
               currency: 'EGP'
             });
             sessionStorage.setItem('ttq_tracked', '1');

@@ -830,9 +830,9 @@
                         <!-- Option 1: Single Piece -->
                         <label
                             class="bundle-option flex items-center justify-between p-4 rounded-xl border-2 cursor-pointer transition-all"
-                            :class="selectedBundle === 1 ? 'border-brand-navy bg-blue-50/50' : 'border-border-gray hover:border-gray-300'">
+                            :class="selectedBundle == 1 ? 'selected border-brand-navy bg-blue-50/50' : 'border-border-gray hover:border-gray-300'">
                             <div class="flex items-center gap-3">
-                                <input type="radio" name="bundle" value="1" x-model="selectedBundle"
+                                <input type="radio" name="bundle" value="1" x-model.number="selectedBundle"
                                     class="w-5 h-5 text-brand-navy focus:ring-brand-navy">
                                 <div>
                                     <span class="font-medium text-charcoal">قطعة واحدة</span>
@@ -844,7 +844,7 @@
                         <!-- Option 2: Bundle (Best Value) -->
                         <label
                             class="bundle-option relative flex items-center justify-between p-4 rounded-xl border-2 cursor-pointer transition-all"
-                            :class="selectedBundle === 2 ? 'border-brand-navy bg-blue-50/50' : 'border-border-gray hover:border-gray-300'">
+                            :class="selectedBundle == 2 ? 'selected border-brand-navy bg-blue-50/50' : 'border-border-gray hover:border-gray-300'">
                             <!-- Best Value Badge -->
                             <div
                                 class="absolute -top-3 right-4 bg-brand-green text-white text-xs font-bold px-3 py-1 rounded-full">
@@ -852,7 +852,7 @@
                             </div>
 
                             <div class="flex items-center gap-3">
-                                <input type="radio" name="bundle" value="2" x-model="selectedBundle"
+                                <input type="radio" name="bundle" value="2" x-model.number="selectedBundle"
                                     class="w-5 h-5 text-brand-navy focus:ring-brand-navy">
                                 <div>
                                     <span class="font-medium text-charcoal">عرض قطعتين</span>

@@ -1,0 +1,29 @@
+{
+  "routes": [
+    {
+      "routePath": "/api/orders",
+      "mountPath": "/api",
+      "method": "GET",
+      "module": [
+        "api/orders.js:onRequestGet"
+      ]
+    },
+    {
+      "routePath": "/api/orders",
+      "mountPath": "/api",
+      "method": "OPTIONS",
+      "module": [
+        "api/orders.js:onRequestOptions"
+      ]
+    },
+    {
+      "routePath": "/api/orders",
+      "mountPath": "/api",
+      "method": "POST",
+      "module": [
+        "api/orders.js:onRequestPost"
+      ]
+    }
+  ],
+  "baseURL": "/"
+}
