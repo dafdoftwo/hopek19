@@ -37,7 +37,7 @@ async function sendTikTokEvent(env, eventData, eventType = 'Lead') {
                 content_id: 'hope-k19',
                 content_category: 'Mobile Phone',
                 currency: 'EGP',
-                value: parseFloat(eventData.total?.replace(/[^0-9.]/g, '')) || 1999,
+                value: parseFloat(eventData.total?.replace(/[^0-9.]/g, '')) || 1699,
                 num_items: eventData.quantity || 1
             },
             page: {
@@ -87,7 +87,7 @@ async function sendFacebookEvent(env, eventData) {
             },
             custom_data: {
                 currency: 'EGP',
-                value: parseFloat(eventData.total?.replace(/[^0-9.]/g, '')) || 1999,
+                value: parseFloat(eventData.total?.replace(/[^0-9.]/g, '')) || 1699,
                 content_name: 'Hope K19',
                 content_type: 'product',
                 contents: [{
@@ -274,7 +274,7 @@ export async function onRequestPost({ request, env }) {
 
         // Prepare row data
         const orderDate = getEgyptDateTime();
-        const orderDetails = `${quantity || 'قطعة واحدة'} - ${total || '1,999 ج.م'}`;
+        const orderDetails = `${quantity || 'قطعة واحدة'} - ${total || '1,699 ج.م'}`;
         
         // حالة العمود L - جديد لكل المحافظات
         const statusL = 'جديد';

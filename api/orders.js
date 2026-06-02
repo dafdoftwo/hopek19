@@ -37,7 +37,7 @@ async function sendTikTokEvent(eventData, eventType = 'Lead') {
                 content_id: 'hope-k19',
                 content_category: 'Mobile Phone',
                 currency: 'EGP',
-                value: parseFloat(eventData.total?.replace(/[^0-9.]/g, '')) || 1999,
+                value: parseFloat(eventData.total?.replace(/[^0-9.]/g, '')) || 1699,
                 num_items: eventData.quantity || 1
             },
             page: {
@@ -98,7 +98,7 @@ async function sendFacebookEvent(eventData) {
             },
             custom_data: {
                 currency: 'EGP',
-                value: parseFloat(eventData.total?.replace(/[^0-9.]/g, '')) || 1999,
+                value: parseFloat(eventData.total?.replace(/[^0-9.]/g, '')) || 1699,
                 content_name: 'Hope K19',
                 content_type: 'product',
                 contents: [{
@@ -229,7 +229,7 @@ const handler = async (event, context) => {
 
             // Prepare row data
             const orderDate = getEgyptDateTime();
-            const orderDetails = `${quantity || 'قطعة واحدة'} - ${total || '1,999 ج.م'}`;
+            const orderDetails = `${quantity || 'قطعة واحدة'} - ${total || '1,699 ج.م'}`;
             const rowData = [
                 orderDate,           // A: تاريخ الطلب
                 name,                // B: الاسم

@@ -47,7 +47,7 @@
     <meta property="og:image:alt" content="موبايل Hope K19 الأصلي - هاتف المهام الصعبة">
     <meta property="og:site_name" content="Hope K19 Official Store">
     <meta property="og:locale" content="ar_EG">
-    <meta property="product:price:amount" content="1999">
+    <meta property="product:price:amount" content="1699">
     <meta property="product:price:currency" content="EGP">
     <meta property="product:availability" content="in stock">
     <meta property="product:condition" content="new">
@@ -117,8 +117,8 @@
         "@type": "AggregateOffer",
         "url": "https://hopek19.pages.dev/",
         "priceCurrency": "EGP",
-        "lowPrice": "1999",
-        "highPrice": "3750",
+        "lowPrice": "1699",
+        "highPrice": "3199",
         "offerCount": "2",
         "availability": "https://schema.org/InStock",
         "itemCondition": "https://schema.org/NewCondition",
@@ -294,7 +294,7 @@
           "name": "ما سعر موبايل Hope K19 في مصر؟",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "سعر القطعة الواحدة 1,999 جنيه مصري، وعرض القطعتين بسعر 3,750 جنيه مصري مع توفير 248 جنيه. الشحن مجاني لجميع المحافظات والدفع عند الاستلام."
+            "text": "سعر القطعة الواحدة 1,699 جنيه مصري، وعرض القطعتين بسعر 3,199 جنيه مصري مع توفير 199 جنيه. الشحن مجاني لجميع المحافظات والدفع عند الاستلام."
           }
         },
         {
@@ -354,7 +354,7 @@
                 content_id: 'HOPE-K19-2026',
                 content_type: 'product',
                 content_name: 'موبايل Hope K19 الأصلي',
-                value: 1999,
+                value: 1699,
                 currency: 'EGP'
             });
         }(window, document, 'ttq');
@@ -614,6 +614,61 @@
             transform: translateX(0);
             opacity: 1;
         }
+
+        /* Commitment Popup Styles */
+        .commitment-overlay {
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .commitment-card {
+            background: rgba(255, 255, 255, 0.97);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes commitment-bounce-in {
+            0% { transform: scale(0.8) translateY(30px); opacity: 0; }
+            50% { transform: scale(1.02) translateY(-5px); opacity: 1; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+
+        @keyframes commitment-icon-pop {
+            0% { transform: scale(0) rotate(-45deg); }
+            60% { transform: scale(1.2) rotate(5deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        @keyframes commitment-pulse-ring {
+            0% { transform: scale(0.8); opacity: 1; }
+            100% { transform: scale(1.6); opacity: 0; }
+        }
+
+        @keyframes commitment-shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .commitment-animate-in {
+            animation: commitment-bounce-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .commitment-icon-animate {
+            animation: commitment-icon-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+        }
+
+        .commitment-pulse-ring {
+            animation: commitment-pulse-ring 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+
+        .commitment-btn-shimmer {
+            background: linear-gradient(110deg, #16a34a 0%, #16a34a 40%, #22c55e 50%, #16a34a 60%, #16a34a 100%);
+            background-size: 200% 100%;
+            animation: commitment-shimmer 2s ease-in-out infinite;
+        }
+
+        .commitment-btn-shimmer:active {
+            transform: scale(0.97);
+        }
     </style>
 </head>
 
@@ -738,9 +793,9 @@
                     <!-- Price Box -->
                     <div class="bg-soft-gray rounded-xl p-5 border border-border-gray mb-4">
                         <div class="flex items-baseline gap-3">
-                            <span class="text-3xl md:text-4xl font-bold text-brand-navy">1,999 ج.م</span>
-                            <span class="text-xl text-gray-400 line-through">2,200 ج.م</span>
-                            <span class="bg-red-100 text-red-600 text-sm font-medium px-2 py-1 rounded">وفر 201
+                            <span class="text-3xl md:text-4xl font-bold text-brand-navy">1,699 ج.م</span>
+                            <span class="text-xl text-gray-400 line-through">2,199 ج.م</span>
+                            <span class="bg-red-100 text-red-600 text-sm font-medium px-2 py-1 rounded">وفر 500
                                 ج.م</span>
                         </div>
                         <p class="text-sm text-gray-500 mt-2">شامل ضريبة القيمة المضافة</p>
@@ -783,7 +838,7 @@
                                     <span class="font-medium text-charcoal">قطعة واحدة</span>
                                 </div>
                             </div>
-                            <span class="font-bold text-charcoal text-lg">1,999 ج.م</span>
+                            <span class="font-bold text-charcoal text-lg">1,699 ج.م</span>
                         </label>
 
                         <!-- Option 2: Bundle (Best Value) -->
@@ -801,12 +856,12 @@
                                     class="w-5 h-5 text-brand-navy focus:ring-brand-navy">
                                 <div>
                                     <span class="font-medium text-charcoal">عرض قطعتين</span>
-                                    <p class="text-sm text-green-600 font-medium">وفر 248 ج.م</p>
+                                    <p class="text-sm text-green-600 font-medium">وفر 199 ج.م</p>
                                 </div>
                             </div>
                             <div class="text-left">
-                                <span class="font-bold text-charcoal text-lg">3,750 ج.م</span>
-                                <p class="text-xs text-gray-400 line-through">3,998 ج.م</p>
+                                <span class="font-bold text-charcoal text-lg">3,199 ج.م</span>
+                                <p class="text-xs text-gray-400 line-through">3,398 ج.م</p>
                             </div>
                         </label>
                     </div>
@@ -1865,8 +1920,8 @@
         <div class="flex items-center justify-between gap-3">
             <div>
                 <p class="text-xs text-gray-500">السعر</p>
-                <p class="text-lg font-bold text-brand-navy" x-text="selectedBundle == 1 ? '1,999 ج.م' : '3,750 ج.م'">
-                    1,999 ج.م</p>
+                <p class="text-lg font-bold text-brand-navy" x-text="selectedBundle == 1 ? '1,699 ج.م' : '3,199 ج.م'">
+                    1,699 ج.م</p>
             </div>
             <button
                 @click="openOrderForm(); setTimeout(() => { document.querySelector('form').scrollIntoView({behavior: 'smooth', block: 'start'}) }, 50)"
@@ -1939,7 +1994,7 @@
                         </div>
                         <div class="text-left">
                             <p class="text-2xl font-black text-amber-600"
-                                x-text="selectedBundle == 1 ? '1,999' : '3,750'"></p>
+                                x-text="selectedBundle == 1 ? '1,699' : '3,199'"></p>
                             <p class="text-amber-500 text-xs">جنيه مصري</p>
                         </div>
                     </div>
@@ -2064,30 +2119,16 @@
                             placeholder="المنطقة - الشارع - رقم المبنى - علامة مميزة"></textarea>
                     </div>
 
-                    <!-- Submit Button -->
+                    <!-- Submit Button - Opens Commitment Popup -->
                     <button type="submit" :disabled="isSubmitting"
                         class="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-4 md:py-5 rounded-xl transition-all duration-300 shadow-lg shadow-green-500/30 hover:shadow-xl hover:shadow-green-500/40 flex items-center justify-center gap-3 text-lg disabled:opacity-70">
-                        <template x-if="!isSubmitting">
-                            <span class="flex items-center gap-3">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 13l4 4L19 7"></path>
-                                </svg>
-                                تأكيد الطلب الآن
-                            </span>
-                        </template>
-                        <template x-if="isSubmitting">
-                            <span class="flex items-center gap-3">
-                                <svg class="w-6 h-6 animate-spin" fill="none" viewBox="0 0 24 24">
-                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
-                                        stroke-width="4"></circle>
-                                    <path class="opacity-75" fill="currentColor"
-                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                                    </path>
-                                </svg>
-                                جاري إرسال الطلب...
-                            </span>
-                        </template>
+                        <span class="flex items-center gap-3">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            تأكيد الطلب الآن
+                        </span>
                     </button>
 
                     <!-- Trust Badges -->
@@ -2113,6 +2154,74 @@
         </div>
     </div>
 
+    <!-- Commitment Popup Modal -->
+    <div x-show="showCommitmentModal"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+        class="fixed inset-0 bg-black/70 commitment-overlay z-[60] flex items-center justify-center p-4"
+        @click.self="showCommitmentModal = false" style="display: none;">
+
+        <div x-show="showCommitmentModal" class="commitment-card commitment-animate-in rounded-3xl w-full max-w-[380px] overflow-hidden">
+            <!-- Top Accent Bar -->
+            <div class="h-1.5 bg-gradient-to-r from-green-400 via-emerald-500 to-green-600"></div>
+
+            <div class="p-6 md:p-8 text-center">
+                <!-- Animated Icon -->
+                <div class="relative w-20 h-20 mx-auto mb-5">
+                    <div class="absolute inset-0 bg-green-100 rounded-full commitment-pulse-ring"></div>
+                    <div class="relative w-20 h-20 bg-gradient-to-br from-green-400 to-emerald-600 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30 commitment-icon-animate">
+                        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Title -->
+                <h3 class="text-xl font-bold text-gray-800 mb-4 leading-relaxed">تعهد بالاستلام</h3>
+
+                <!-- Commitment Message -->
+                <div class="bg-gradient-to-br from-slate-50 to-gray-100 rounded-2xl p-4 mb-6 border border-gray-200/80">
+                    <p class="text-gray-700 text-[15px] leading-[1.9] font-medium">
+                        تتعهد الشركة أن يصلك المنتج
+                        <span class="text-brand-navy font-bold">كما بالفيديو والصور تماماً</span>
+                        <br>
+                        فهل تتعهد بالاستلام؟
+                    </p>
+                </div>
+
+                <!-- Confirm Button -->
+                <button @click="commitmentConfirmed()" :disabled="isSubmitting"
+                    class="commitment-btn-shimmer w-full text-white font-bold py-4 rounded-2xl transition-all duration-200 shadow-lg shadow-green-500/30 flex items-center justify-center gap-3 text-lg disabled:opacity-70 disabled:cursor-not-allowed active:scale-[0.97]">
+                    <template x-if="!isSubmitting">
+                        <span class="flex items-center gap-2">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            نعم اتعهد امام الله
+                        </span>
+                    </template>
+                    <template x-if="isSubmitting">
+                        <span class="flex items-center gap-3">
+                            <svg class="w-6 h-6 animate-spin" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            جاري إرسال الطلب...
+                        </span>
+                    </template>
+                </button>
+
+                <!-- Cancel Link -->
+                <button @click="showCommitmentModal = false"
+                    class="mt-3 text-gray-400 hover:text-gray-600 text-sm transition-colors duration-200 py-2">
+                    تراجع
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Sticky Mobile CTA -->
     <div x-show="!showOrderForm"
         class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-3 md:hidden z-50 safe-area-bottom">
@@ -2124,7 +2233,7 @@
                     d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
                 </path>
             </svg>
-            اطلب الآن بخصم 30% - <span x-text="selectedBundle == 1 ? '1,999 ج.م' : '3,750 ج.م'"></span>
+            اطلب الآن بخصم 25% - <span x-text="selectedBundle == 1 ? '1,699 ج.م' : '3,199 ج.م'"></span>
         </button>
     </div>
 
@@ -2137,6 +2246,7 @@
                 selectedBundle: 1,
                 showOrderForm: false,
                 showSuccessModal: false,
+                showCommitmentModal: false,
                 orderForm: {
                     name: '',
                     phone: '',
@@ -2181,7 +2291,14 @@
                 API_URL: '/api/orders',
                 isSubmitting: false,
 
+                // Step 1: Form submit opens the commitment popup
                 async submitOrder() {
+                    // Show the commitment popup
+                    this.showCommitmentModal = true;
+                },
+
+                // Step 2: Commitment confirmed - actually send order
+                async commitmentConfirmed() {
                     if (this.isSubmitting) return;
                     this.isSubmitting = true;
 
@@ -2204,7 +2321,7 @@
                         address: this.orderForm.address,
                         product: 'موبايل المهام الخاصة K19',
                         quantity: this.selectedBundle == 1 ? 'قطعة واحدة' : 'قطعتين',
-                        total: this.selectedBundle == 1 ? '1,999 ج.م' : '3,750 ج.م'
+                        total: this.selectedBundle == 1 ? '1,699 ج.م' : '3,199 ج.م'
                     };
 
                     // Send to Google Sheets via API
@@ -2232,15 +2349,20 @@
                             governorate: this.confirmedOrder.governorate,
                             address: this.confirmedOrder.address,
                             quantity: this.confirmedOrder.bundle == 1 ? 'قطعة واحدة' : 'قطعتين',
-                            total: this.confirmedOrder.bundle == 1 ? '1,999 ج.م' : '3,750 ج.م'
+                            total: this.confirmedOrder.bundle == 1 ? '1,699 ج.م' : '3,199 ج.م'
                         };
                         localStorage.setItem('confirmedOrder', JSON.stringify(confirmData));
+
+                        // Close modals
+                        this.showCommitmentModal = false;
+                        this.showOrderForm = false;
 
                         // Redirect to confirmation page ONLY on success
                         window.location.href = '/confirm';
                         
                     } catch (error) {
                         console.error('❌ Error sending to Google Sheets:', error);
+                        this.showCommitmentModal = false;
                         alert('حدث خطأ في إرسال الطلب. برجاء المحاولة مرة أخرى.');
                     }
 

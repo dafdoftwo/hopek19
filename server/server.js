@@ -59,7 +59,7 @@ app.post('/api/orders', async (req, res) => {
 
         // Prepare row data
         const orderDate = getEgyptDateTime();
-        const orderDetails = `${quantity || 'قطعة واحدة'} - ${total || '1,999 ج.م'}`;
+        const orderDetails = `${quantity || 'قطعة واحدة'} - ${total || '1,699 ج.م'}`;
         
         // حالة العمود L - جديد لكل المحافظات
         const statusL = 'جديد';
